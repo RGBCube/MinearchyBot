@@ -1,0 +1,1 @@
+run = "pip install -Ur requirements.txt && python bot.py"
