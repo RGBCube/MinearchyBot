@@ -62,7 +62,7 @@ class Miscellanious(
     )
     async def count(self, ctx: commands.Context, /) -> None:
         await ctx.reply(f"Currently in `{len(self.bot.guilds)}` servers.")
-        
+
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message, /) -> None:
         if not message.guild:
@@ -87,10 +87,6 @@ class Miscellanious(
     ) -> None:
         if channel is None:
             channel = ctx.channel
-
-        if not any(channel.id == ch.id for ch in ctx.guild.chanels):
-            await ctx.reply("Invalid channel.")
-            return
 
         logs = self.sniped[channel.id]
 
