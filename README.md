@@ -22,6 +22,8 @@ This is a simple bot made for the [Minearchy Discord](https://discord.gg/2n6T78J
 `=wiki`: Sends a link to the wiki.
 
 ### Miscellaneous Commands
+`=count`: Sends how many servers the bot is in.
+
 `=hello`: Hello!
 
 `=help`: Sends bot help.
