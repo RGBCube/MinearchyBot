@@ -15,7 +15,7 @@ class MinearchyBot(commands.Bot):
     log_webhook: discord.Webhook
     up_ts: float
 
-    embed_color = 0x39FF14
+    embed_color = 0x3500FF
 
     def __init__(self, token: str, webhook_url: str, /) -> None:
         ip = "play.landsofminearchy.com"
