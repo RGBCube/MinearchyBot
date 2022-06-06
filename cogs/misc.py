@@ -5,6 +5,7 @@ from discord.ext import commands
 import datetime
 from collections import defaultdict, deque
 import discord
+import inspect
 from discord.utils import escape_markdown as es_md
 import platform
 
@@ -106,14 +107,14 @@ class Miscellanious(
             message, ts = log
             embed.add_field(
                 name=str(i) + (" (latest)" if not i else ""),
-                value=f"""
-    Author: {message.author.mention} (ID: {message.author.id}, Plain: {discord.utils.escape_markdown(str(message.author))})
+                value=inspect.cleandoc(
+                    f"""Author: {message.author.mention} (ID: {message.author.id}, Plain: {discord.utils.escape_markdown(str(message.author))})
     Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
     Content:
     ```
     {message.content.replace('`', f'{zwsp}`{zwsp}')}
-    ```
-    """,  # zero-width spaces, or it will break.
+    ```"""
+                ),  # zero-width spaces, or it will break.
                 inline=False,
             )
 
