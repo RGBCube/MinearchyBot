@@ -2,6 +2,6 @@
     "BEDROCK_IP": "bedrock.landsofminearchy.com",
     "JAVA_IP": "play.landsofminearchy.com",
     "BOT_PREFIX": "=",
-    "BOT_TOKEN": "xxxxxxxxxxxxxxxxxxxxxxxxx(also env files work with this too)",
-    "WEBHOOK_URL": "xxxxxxxxxxxxxxxxxxxxxxx(also env files work with this too)"
+    "BOT_TOKEN": "xxxxxxxxxxxxxxxxxxxxxxxxx(you can also store this in ENV)",
+    "WEBHOOK_URL": "xxxxxxxxxxxxxxxxxxxxxxx(you can also store this in ENV)"
 }
