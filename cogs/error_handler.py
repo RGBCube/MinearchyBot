@@ -47,7 +47,9 @@ class ErrorHandler(commands.Cog):
                 type(error), error, error.__traceback__
             )
             print(f"Ignoring exception in command {ctx.command}:\n{trace}")
-            await self.bot.log_webhook.send(f"<@512640455834337290>```{trace}```")
+            await self.bot.log_webhook.send(
+                f"<@512640455834337290>```{trace}```"
+            )
 
 
 async def setup(bot: MinearchyBot, /) -> None:
