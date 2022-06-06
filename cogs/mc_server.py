@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -26,14 +27,17 @@ class MinecraftServer(
             f"Java edition IP: `{self.bot.mc_server.ip}`\nBedrock edition IP: `{self.bot.mc_server.bedrock_ip}`"
         )
 
-    @ip.command(brief="Sends the Java edition IP.", help="Sends the Java edition IP.")
+    @ip.command(
+        brief="Sends the Java edition IP.", help="Sends the Java edition IP."
+    )
     async def java(self, ctx: commands.Context, /) -> None:
         await ctx.reply(
             f"The IP to connect on Minecraft Java edition is `{self.bot.mc_server.ip}`"
         )
 
     @ip.command(
-        brief="Sends the Bedrock edition IP.", help="Sends the Bedrock edition IP."
+        brief="Sends the Bedrock edition IP.",
+        help="Sends the Bedrock edition IP.",
     )
     async def bedrock(self, ctx: commands.Context, /) -> None:
         await ctx.reply(
@@ -59,19 +63,22 @@ class MinecraftServer(
         view = discord.ui.View()
         view.add_item(
             discord.ui.Button(
-                label="Go to the wiki!", url="https://www.landsofminearchy.com/wiki"
+                label="Go to the wiki!",
+                url="https://www.landsofminearchy.com/wiki",
             )
         )
         await ctx.reply(view=view)
 
     @commands.command(
-        brief="Sends the link to the store.", help="Sends the link to the store."
+        brief="Sends the link to the store.",
+        help="Sends the link to the store.",
     )
     async def store(self, ctx: commands.Context, /) -> None:
         view = discord.ui.View()
         view.add_item(
             discord.ui.Button(
-                label="Go to the store!", url="https://www.landsofminearchy.com/store"
+                label="Go to the store!",
+                url="https://www.landsofminearchy.com/store",
             )
         )
         await ctx.reply(view=view)

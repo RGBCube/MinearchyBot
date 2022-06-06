@@ -47,7 +47,7 @@ class MinearchyBot(commands.Bot):
                 brief="Sends help.",
                 help="Sends all the commands of the bot, or help of a specific command and module.",
             ),
-        )     
+        )
 
     async def on_ready(self) -> None:
         self.up_ts = time.time()
@@ -70,8 +70,8 @@ class MinearchyBot(commands.Bot):
             async with self, aiohttp.ClientSession() as session:
                 self.session = session
                 self.log_webhook = discord.Webhook.from_url(
-            self.webhook_url, session=self.session, bot_token=self.token
-        )
+                    self.webhook_url, session=self.session, bot_token=self.token
+                )
                 await self.load_extensions()
                 await self.start(self.token, reconnect=True)
 
