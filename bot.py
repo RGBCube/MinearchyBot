@@ -36,7 +36,7 @@ class MinearchyBot(commands.Bot):
 
         super().__init__(
             command_prefix="=",
-            owner_ids=set([512640455834337290]),
+            owner_ids={512640455834337290},
             intents=intents,
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions.none(),

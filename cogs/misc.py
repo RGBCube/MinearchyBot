@@ -97,7 +97,7 @@ class Miscellanious(
         for i, log in reversed(list(enumerate(logs))):
             message, ts = log
             embed.add_field(
-                name=str(i) + (" (latest)" if not i else ""),
+                name=str(i) + ("" if i else " (latest)"),
                 value=f"""
     Author: {message.author.mention} (ID: {message.author.id}, Plain: {discord.utils.escape_markdown(str(message.author))})
     Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
@@ -105,9 +105,10 @@ class Miscellanious(
     ```
     {message.content.replace('`', f'{zwsp}`{zwsp}')}
     ```
-    """,  # zero-width spaces, or it will break.
+    """,
                 inline=False,
             )
+
 
         await ctx.reply(embed=embed)
 
