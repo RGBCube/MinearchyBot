@@ -42,6 +42,9 @@ class ErrorHandler(commands.Cog):
         elif isinstance(error, commands.MissingPermissions):
             await ctx.reply("You can't use this command!")
 
+        elif isinstance(error, commands.ChannelNotFound):
+            await ctx.reply("Invalid channel.")
+
         else:
             trace = traceback.format_exception(
                 type(error), error, error.__traceback__
