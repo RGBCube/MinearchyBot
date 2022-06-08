@@ -23,7 +23,7 @@ class MinecraftServer(
     )
     async def ip(self, ctx: commands.Context, /) -> None:
         await ctx.reply(
-            f"Java edition IP: `{self.bot.mc_server.ip}`\nBedrock edition IP: `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required tı join."
+            f"Java edition IP: `{self.bot.mc_server.ip}`\nBedrock edition IP: `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required to join."
         )
 
     @ip.command(
@@ -31,7 +31,7 @@ class MinecraftServer(
     )
     async def java(self, ctx: commands.Context, /) -> None:
         await ctx.reply(
-            f"The IP to connect on Minecraft Java edition is `{self.bot.mc_server.ip}`\nNote: Minecraft 1.18+ is required tı join."
+            f"The IP to connect on Minecraft Java edition is `{self.bot.mc_server.ip}`\nNote: Minecraft 1.18+ is required to join."
         )
 
     @ip.command(
@@ -40,7 +40,7 @@ class MinecraftServer(
     )
     async def bedrock(self, ctx: commands.Context, /) -> None:
         await ctx.reply(
-            f"The IP to connect on Minecraft Bava edition is `{self.bot.mc_server.ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required tı join."
+            f"The IP to connect on Minecraft Bedrock edition is `{self.bot.mc_server.ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required to join."
         )
 
     @commands.command(
