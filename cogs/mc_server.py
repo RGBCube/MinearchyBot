@@ -40,7 +40,7 @@ class MinecraftServer(
     )
     async def bedrock(self, ctx: commands.Context, /) -> None:
         await ctx.reply(
-            f"The IP to connect on Minecraft Bedrock edition is `{self.bot.mc_server.ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required to join."
+            f"The IP to connect on Minecraft Bedrock edition is `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required to join."
         )
 
     @commands.command(
