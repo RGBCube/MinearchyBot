@@ -91,8 +91,7 @@ for key in ["BOT_TOKEN", "WEBHOOK_URL"]:
 
 bot = MinearchyBot(
     token=config["BOT_TOKEN"],
-    webhook_url=config["WEBHOOK_URL"],
-    suggestions_channel_id=config["SUGGESTIONS_CHANNEL_ID"],
+    webhook_url=config["WEBHOOK_URL"]
 )
 
 bot.run()
