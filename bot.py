@@ -18,11 +18,9 @@ class MinearchyBot(commands.Bot):
     log_webhook: discord.Webhook
     up_ts: float
 
-    embed_color = 0x3500FF
+    embed_color = 0x2C65FF
 
-    def __init__(
-        self, *, token: str, webhook_url: str, suggestions_channel_id: int
-    ) -> None:
+    def __init__(self, *, token: str, webhook_url: str) -> None:
         ip = "play.landsofminearchy.com"
         self.mc_server = mcstatus.JavaServer.lookup(ip)
         self.mc_server.ip = ip
@@ -30,10 +28,9 @@ class MinearchyBot(commands.Bot):
 
         self.token = token
         self.webhook_url = webhook_url
-        self.suggestions_channel_id = suggestions_channel_id
         super().__init__(
             command_prefix="=",
-            owner_ids=set([512640455834337290]),
+            owner_ids={512640455834337290},
             intents=discord.Intents(
                 guilds=True,
                 members=True,
@@ -52,7 +49,7 @@ class MinearchyBot(commands.Bot):
 
     async def on_ready(self) -> None:
         self.up_ts = time.time()
-        self.suggestions_channel = self.get_channel(self.suggestions_channel_id)
+        self.suggestions_channel = self.get_channel(955972394885984276)
         print(f"\nConnected to Discord!\nUser: {self.user}\nID: {self.user.id}")
         await self.log_webhook.send("Bot is now online!")
 
