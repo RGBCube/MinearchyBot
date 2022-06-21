@@ -49,8 +49,8 @@ class ErrorHandler(commands.Cog):
             await ctx.reply("Invalid channel.")
 
         else:
-            trace = traceback.format_exception(type(error), error, error.__traceback__)
-            print(f"Ignoring exception in command {ctx.command}:\n{''.join(trace)}")
+            trace = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+            print(f"Ignoring exception in command {ctx.command}:\n{trace}")
             await self.bot.log_webhook.send(f"<@512640455834337290>```{trace}```")
 
 
