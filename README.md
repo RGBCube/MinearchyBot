@@ -6,7 +6,7 @@ This is a simple bot made for the [Minearchy Discord](https://discord.gg/2n6T78J
 
 2: Edit the `config.example.json` to your liking and rename it to `config.json`.
 
-3: If you are using replit, set the `USING_REPLIT` variable to `true` (or any non-empty string works, really).
+3: Install dependencies using `pip install --no-cache-dir -r requirements.txt`
 
 4: Run `python bot.py`.
 
