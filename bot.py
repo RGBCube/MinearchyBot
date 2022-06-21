@@ -1,46 +1,47 @@
-import discord
-import time
-import aiohttp
-from discord.ext import commands
-import os
-import json
 import asyncio
-from mcstatus import MinecraftServer
-import traceback
+import itertools
+import json
+import os
 import pathlib
+import time
+import traceback
+
+import aiohttp
+import discord
+import mcstatus
+from discord.ext import commands
 
 
 class MinearchyBot(commands.Bot):
     session: aiohttp.ClientSession
+    suggestions_channel: discord.TextChannel
     log_webhook: discord.Webhook
     up_ts: float
 
     embed_color = 0x3500FF
 
-    def __init__(self, token: str, webhook_url: str, /) -> None:
+    def __init__(
+        self, *, token: str, webhook_url: str, suggestions_channel_id: int
+    ) -> None:
         ip = "play.landsofminearchy.com"
-        self.mc_server = MinecraftServer.lookup(ip)
+        self.mc_server = mcstatus.JavaServer.lookup(ip)
         self.mc_server.ip = ip
         self.mc_server.bedrock_ip = "bedrock.landsofminearchy.com"
 
         self.token = token
         self.webhook_url = webhook_url
-
-        intents = discord.Intents(
-            guilds=True,
-            members=True,
-            messages=True,
-            message_content=True,
-        )
-        stuff_to_cache = discord.MemberCacheFlags.from_intents(intents)
-
+        self.suggestions_channel_id = suggestions_channel_id
         super().__init__(
             command_prefix="=",
             owner_ids=set([512640455834337290]),
-            intents=intents,
+            intents=discord.Intents(
+                guilds=True,
+                members=True,
+                messages=True,
+                message_content=True,
+            ),
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions.none(),
-            member_cache_flags=stuff_to_cache,
             max_messages=1000,
             strip_after_prefix=True,
             help_attrs=dict(
@@ -51,13 +52,17 @@ class MinearchyBot(commands.Bot):
 
     async def on_ready(self) -> None:
         self.up_ts = time.time()
+        self.suggestions_channel = self.get_channel(self.suggestions_channel_id)
         print(f"\nConnected to Discord!\nUser: {self.user}\nID: {self.user.id}")
         await self.log_webhook.send("Bot is now online!")
 
     async def load_extensions(self) -> None:
-        for fn in map(
-            lambda file_path: str(file_path).replace("/", ".")[:-3],
-            pathlib.Path("./cogs").rglob("*.py"),
+        for fn in itertools.chain(
+            map(
+                lambda file_path: str(file_path).replace("/", ".")[:-3],
+                pathlib.Path("./cogs").rglob("*.py"),
+            ),
+            ["jishaku"],
         ):
             try:
                 await self.load_extension(fn)
@@ -87,11 +92,10 @@ with open("./config.json") as f:
 for key in ["BOT_TOKEN", "WEBHOOK_URL"]:
     config.setdefault(key, os.getenv(key))
 
-bot = MinearchyBot(config["BOT_TOKEN"], config["WEBHOOK_URL"])
-
-if os.getenv("USING_REPLIT"):
-    import webserver
-
-    webserver.keep_alive()
+bot = MinearchyBot(
+    token=config["BOT_TOKEN"],
+    webhook_url=config["WEBHOOK_URL"],
+    suggestions_channel_id=config["SUGGESTIONS_CHANNEL_ID"],
+)
 
 bot.run()

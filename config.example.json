@@ -3,5 +3,6 @@
     "JAVA_IP": "play.landsofminearchy.com",
     "BOT_PREFIX": "=",
     "BOT_TOKEN": "XXX(ENV works too)",
-    "WEBHOOK_URL": "XXX(ENV works too)"
+    "WEBHOOK_URL": "XXX(ENV works too)",
+    "SUGGESTIONS_CHANNEL_ID": 955972394885984276
 }

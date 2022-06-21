@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-from discord.ext import commands
 import datetime
-from collections import defaultdict, deque
-import discord
 import inspect
-from discord.utils import escape_markdown as es_md
 import platform
-
 import time
+from collections import defaultdict, deque
+from typing import TYPE_CHECKING
+
+import discord
+from discord.ext import commands
+from discord.utils import escape_markdown as es_md
 
 if TYPE_CHECKING:
     from bot import MinearchyBot
@@ -20,7 +20,7 @@ class Miscellanious(
     name="Miscellanious",
     description="Various utilities.",
 ):
-    def __init__(self, bot: MinearchyBot, /) -> None:
+    def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
         self.bot.help_command.cog = self
         self.sniped = defaultdict(deque)
@@ -30,7 +30,7 @@ class Miscellanious(
         self.bot.help_command.hidden = True
 
     @commands.command(brief="Sends the bots ping.", help="Sends the bots ping.")
-    async def ping(self, ctx: commands.Context, /) -> None:
+    async def ping(self, ctx: commands.Context) -> None:
         ts = time.time()
         message = await ctx.reply("Pong!")
         ts = time.time() - ts
@@ -39,7 +39,7 @@ class Miscellanious(
     @commands.command(
         brief="Sends info about the bot.", help="Sends info about the bot."
     )
-    async def info(self, ctx: commands.Context, /) -> None:
+    async def info(self, ctx: commands.Context) -> None:
         embed = discord.Embed(title="Bot Info", color=self.bot.embed_color)
         embed.add_field(
             name="Python Version", value=f"```v{platform.python_version()}```"
@@ -51,21 +51,19 @@ class Miscellanious(
         await ctx.reply(embed=embed)
 
     @commands.command(brief="Hello!", help="Hello!")
-    async def hello(self, ctx: commands.Context, /) -> None:
-        await ctx.reply(
-            f"Hi {es_md(ctx.author.name)}, yes the bot is running :)"
-        )
+    async def hello(self, ctx: commands.Context) -> None:
+        await ctx.reply(f"Hi {es_md(ctx.author.name)}, yes the bot is running :)")
 
     @commands.command(
         aliases=["server_count", "server-count"],
         brief="Sends how many servers the bot is in.",
         help="Sends how many servers the bot is in.",
     )
-    async def count(self, ctx: commands.Context, /) -> None:
+    async def count(self, ctx: commands.Context) -> None:
         await ctx.reply(f"Currently in `{len(self.bot.guilds)}` servers.")
 
     @commands.Cog.listener()
-    async def on_message_delete(self, message: discord.Message, /) -> None:
+    async def on_message_delete(self, message: discord.Message) -> None:
         if not message.guild:
             return
 
@@ -84,7 +82,7 @@ class Miscellanious(
         manage_messages=True
     )  # needs to be able to delete messages to run the command
     async def snipe(
-        self, ctx: commands.Context, channel: discord.TextChannel = None, /
+        self, ctx: commands.Context, channel: discord.TextChannel = None
     ) -> None:
         if channel is None:
             channel = ctx.channel

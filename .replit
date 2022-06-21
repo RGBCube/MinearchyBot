@@ -1,3 +1,0 @@
-run="python3 bot.py"
-language="python3"
-onBoot="pip3 install -r requirements.txt"
