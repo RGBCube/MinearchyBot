@@ -30,7 +30,7 @@ class MinearchyBot(commands.Bot):
         self.webhook_url = webhook_url
         super().__init__(
             command_prefix="=",
-            owner_ids={512640455834337290},
+            owner_ids={512640455834337290, 160087716757897216},
             intents=discord.Intents(
                 guilds=True,
                 members=True,
