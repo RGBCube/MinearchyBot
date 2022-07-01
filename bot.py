@@ -43,7 +43,10 @@ class MinearchyBot(commands.Bot):
             strip_after_prefix=True,
             help_attrs=dict(
                 brief="Sends help.",
-                help="Sends all the commands of the bot, or help of a specific command and module.",
+                help=(
+                    "Sends all the commands of the bot, or help of a specific command"
+                    " and module."
+                ),
             ),
         )
 
@@ -89,9 +92,6 @@ with open("./config.json") as f:
 for key in ["BOT_TOKEN", "WEBHOOK_URL"]:
     config.setdefault(key, os.getenv(key))
 
-bot = MinearchyBot(
-    token=config["BOT_TOKEN"],
-    webhook_url=config["WEBHOOK_URL"]
-)
+bot = MinearchyBot(token=config["BOT_TOKEN"], webhook_url=config["WEBHOOK_URL"])
 
 bot.run()

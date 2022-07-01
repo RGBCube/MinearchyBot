@@ -31,7 +31,8 @@ class Suggestions(commands.Cog):
         await message.add_reaction("❌")
 
         await ctx.reply(
-            f"Suggestion submitted!\nYou can view it at {self.bot.suggestions_channel.mention}"
+            "Suggestion submitted!\nYou can view it at"
+            f" {self.bot.suggestions_channel.mention}"
         )
 
 

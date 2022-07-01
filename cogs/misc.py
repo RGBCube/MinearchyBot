@@ -46,7 +46,9 @@ class Miscellanious(
         )
         embed.add_field(
             name="Uptime",
-            value=f"```{datetime.timedelta(seconds=int(time.time() - self.bot.up_ts))}```",
+            value=(
+                f"```{datetime.timedelta(seconds=int(time.time() - self.bot.up_ts))}```"
+            ),
         )
         await ctx.reply(embed=embed)
 
@@ -76,7 +78,10 @@ class Miscellanious(
 
     @commands.command(
         brief="Sends the latest deleted messages.",
-        help="Sends the last 5 deleted messages in a specified channel.\nIf the channel isn't specified, it uses the current channel.",
+        help=(
+            "Sends the last 5 deleted messages in a specified channel.\nIf the channel"
+            " isn't specified, it uses the current channel."
+        ),
     )
     @commands.has_permissions(
         manage_messages=True
@@ -91,12 +96,16 @@ class Miscellanious(
 
         if not logs:
             await ctx.reply(
-                f"There are no messages to be sniped in {'this channel.' if channel.id == ctx.channel.id else channel.mention}"
+                "There are no messages to be sniped in"
+                f" {'this channel.' if channel.id == ctx.channel.id else channel.mention}"
             )
             return
 
         embed = discord.Embed(
-            title=f"Showing last 5 deleted messages for {'the current channel' if ctx.channel.id == channel.id else channel}",
+            title=(
+                "Showing last 5 deleted messages for"
+                f" {'the current channel' if ctx.channel.id == channel.id else channel}"
+            ),
             description="The lower the number is, the more recent it got deleted.",
             color=self.bot.embed_color,
         )
@@ -104,15 +113,15 @@ class Miscellanious(
         for i, log in reversed(list(enumerate(logs))):
             message, ts = log
             embed.add_field(
-                name=str(i) + (" (latest)" if not i else ""),
+                name=str(i) + ("" if i else " (latest)"),
                 value=inspect.cleandoc(
                     f"""Author: {message.author.mention} (ID: {message.author.id}, Plain: {discord.utils.escape_markdown(str(message.author))})
-    Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
-    Content:
-    ```
-    {message.content.replace('`', f'{zwsp}`{zwsp}')}
-    ```"""
-                ),  # zero-width spaces, or it will break.
+            Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
+            Content:
+            ```
+            {message.content.replace('`', f'{zwsp}`{zwsp}')}
+            ```"""
+                ),
                 inline=False,
             )
 

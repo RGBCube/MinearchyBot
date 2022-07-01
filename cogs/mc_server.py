@@ -24,13 +24,16 @@ class MinecraftServer(
     )
     async def ip(self, ctx: commands.Context) -> None:
         await ctx.reply(
-            f"Java edition IP: `{self.bot.mc_server.ip}`\nBedrock edition IP: `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required to join."
+            f"Java edition IP: `{self.bot.mc_server.ip}`\nBedrock edition IP:"
+            f" `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+"
+            " is required to join."
         )
 
     @ip.command(brief="Sends the Java edition IP.", help="Sends the Java edition IP.")
     async def java(self, ctx: commands.Context) -> None:
         await ctx.reply(
-            f"The IP to connect on Minecraft Java edition is `{self.bot.mc_server.ip}`\nNote: Minecraft 1.18+ is required to join."
+            "The IP to connect on Minecraft Java edition is"
+            f" `{self.bot.mc_server.ip}`\nNote: Minecraft 1.18+ is required to join."
         )
 
     @ip.command(
@@ -39,12 +42,17 @@ class MinecraftServer(
     )
     async def bedrock(self, ctx: commands.Context) -> None:
         await ctx.reply(
-            f"The IP to connect on Minecraft Bedrock edition is `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+ is required to join."
+            "The IP to connect on Minecraft Bedrock edition is"
+            f" `{self.bot.mc_server.bedrock_ip}` (Port: 19132)\nNote: Minecraft 1.18+"
+            " is required to join."
         )
 
     @commands.command(
         brief="Shows information about the Minecraft server.",
-        help="Shows the total player count, the Minecraft server IP and the server latency.",
+        help=(
+            "Shows the total player count, the Minecraft server IP and the server"
+            " latency."
+        ),
     )
     async def status(self, ctx: commands.Context) -> None:
         server = self.bot.mc_server
