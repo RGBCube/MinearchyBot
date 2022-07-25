@@ -111,6 +111,21 @@ class MinecraftServer(
         )
         await ctx.reply(view=view)
 
+    @commands.command(
+        aliases=["apply", "staffapply", "applystaff", "applyforstaff", "staff-application", "staff-applications", "staff_applications"],
+        brief="Sends the link to the staff application.",
+        help="Sends the link to the staff application.",
+    )
+    async def staff_application(self, ctx: commands.Context) -> None:
+        view = discord.ui.View()
+        view.add_item(
+            discord.ui.Button(
+                label="Apply for staff!",
+                url="https://docs.google.com/forms/d/1I7Rh_e-ZTXm5L51XoKZsOAk7NAJcHomUUCuOlQcARvY/viewform",
+            )
+        )
+        await ctx.reply(view=view)
+
     @tasks.loop(minutes=5)
     async def check_processes_up(self) -> None:
         pass
