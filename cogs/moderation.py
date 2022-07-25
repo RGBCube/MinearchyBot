@@ -39,7 +39,9 @@ class Moderation(commands.Cog):
             await ctx.reply("Invalid time.")
             return
 
-        await member.timeout(timedelta(**{times[duration[-1]]: time}), reason=f"Timed out by moderator {ctx.author}")
+        clean_time_name = times[duration[-1]]
+        await member.timeout(timedelta(**{clean_time_name: time}), reason=f"Timed out by moderator {ctx.author}")
+        await ctx.send(f"Timed out {member.mention} for {time} {clean_time_name}.")
 
 
 async def setup(bot: MinearchyBot) -> None:
