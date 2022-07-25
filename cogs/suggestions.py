@@ -9,7 +9,11 @@ if TYPE_CHECKING:
     from bot import MinearchyBot
 
 
-class Suggestions(commands.Cog):
+class Suggestions(
+    commands.Cog,
+    name="Suggestions",
+    description="Suggest stuff.",
+):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
 

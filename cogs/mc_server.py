@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class MinecraftServer(
     commands.Cog,
     name="Minecraft Server",
-    description="Utilites for the Minecraft server.",
+    description="Utilities for the Minecraft server.",
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
