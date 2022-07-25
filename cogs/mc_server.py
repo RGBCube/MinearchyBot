@@ -97,6 +97,20 @@ class MinecraftServer(
         )
         await ctx.reply(view=view)
 
+    @commands.command(
+        brief="Sends the links you can use to vote for the Minecraft server.",
+        help="Sends the links you can use to vote for the Minecraft server.",
+    )
+    async def vote(self, ctx: commands.Context) -> None:
+        view = discord.ui.View()
+        view.add_item(
+            discord.ui.Button(
+                label="Vote for the Minecraft server!",
+                url="https://landsofminearchy.com/vote",
+            )
+        )
+        await ctx.reply(view=view)
+
     @tasks.loop(minutes=5)
     async def check_processes_up(self) -> None:
         pass
