@@ -15,9 +15,9 @@ if TYPE_CHECKING:
     from bot import MinearchyBot
 
 
-class Miscellanious(
+class Miscellaneous(
     commands.Cog,
-    name="Miscellanious",
+    name="Miscellaneous",
     description="Various utilities.",
 ):
     def __init__(self, bot: MinearchyBot) -> None:
@@ -63,6 +63,13 @@ class Miscellanious(
     )
     async def count(self, ctx: commands.Context) -> None:
         await ctx.reply(f"Currently in `{len(self.bot.guilds)}` servers.")
+
+    @commands.command(
+        brief="Sends the total members in the server.",
+        help="Sends the total members in the server.",
+    )
+    async def members(self, ctx: commands.Context) -> None:
+        await ctx.reply(f"There are `{ctx.guild.member_count}` users in this server.")
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message) -> None:
@@ -129,4 +136,4 @@ class Miscellanious(
 
 
 async def setup(bot: MinearchyBot) -> None:
-    await bot.add_cog(Miscellanious(bot))
+    await bot.add_cog(Miscellaneous(bot))
