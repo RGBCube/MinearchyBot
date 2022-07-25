@@ -78,7 +78,7 @@ class MinecraftServer(
         view.add_item(
             discord.ui.Button(
                 label="Go to the wiki!",
-                url="https://www.landsofminearchy.com/wiki",
+                url="https://landsofminearchy.com/wiki",
             )
         )
         await ctx.reply(view=view)
@@ -92,7 +92,7 @@ class MinecraftServer(
         view.add_item(
             discord.ui.Button(
                 label="Go to the store!",
-                url="https://www.landsofminearchy.com/store",
+                url="https://landsofminearchy.com/store",
             )
         )
         await ctx.reply(view=view)
