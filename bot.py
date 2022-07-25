@@ -37,6 +37,7 @@ class MinearchyBot(commands.Bot):
                 messages=True,
                 message_content=True,
             ),
+            status=discord.Game("on play.landsofminearchy.com"),
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions.none(),
             max_messages=1000,
