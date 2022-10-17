@@ -3,9 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import discord
-from discord.ext import commands, tasks
-import subprocess
-import psutil
+from discord.ext import commands
 
 if TYPE_CHECKING:
     from bot import MinearchyBot
@@ -18,12 +16,6 @@ class MinecraftServer(
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
-
-    async def cog_load(self) -> None:
-        self.check_processes_up.start()
-
-    async def cog_unload(self) -> None:
-        self.check_processes_up.cancel()
 
     @commands.group(
         invoke_without_command=True,
@@ -125,23 +117,6 @@ class MinecraftServer(
             )
         )
         await ctx.reply(view=view)
-
-    @tasks.loop(minutes=5)
-    async def check_processes_up(self) -> None:
-        pass
-        # pids = [
-        #     int(pid)
-        #     for pid in subprocess.Popen(
-        #         ["ps", "aux", "|", "grep", "java"], stdout=subprocess.PIPE
-        #     )
-        #     .communicate()[0]
-        #     .splitlines()
-        # ]
-        # await self.bot.log_webhook.send(f"```\n{pids!r}```")
-        #
-        # for pid in pids:
-        #     if not psutil.pid_exists(pid):
-        #         await self.bot.log_webhook.send(f"No such pid: {pid}")
 
 
 async def setup(bot: MinearchyBot) -> None:
