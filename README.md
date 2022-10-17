@@ -9,26 +9,3 @@ This is a simple bot made for the [Minearchy Discord](https://discord.gg/2n6T78J
 3: Install dependencies using `pip install --no-cache-dir -r requirements.txt`
 
 4: Run `python bot.py`.
-
-## Commands
-
-### Minecraft Server Related Commands
-`=ip [java|bedrock]`: Sends both of the server IPs. If the version is specified, it sends that versions IP.
-
-`=status`: Sends the Minecraft servers player count and latency (ping).
-
-`=store`: Sends a link to the store.
-
-`=wiki`: Sends a link to the wiki.
-
-### Miscellaneous Commands
-`=count`: Sends how many servers the bot is in.
-
-`=hello`: Hello!
-
-`=help`: Sends bot help.
-
-`=info`: Sends info about the bot. This is the bots Python runtime version and uptime.
-
-`=ping`: Sends the bots latency.
-    

@@ -1,4 +1,3 @@
-discord.py @ git+https://github.com/Rapptz/discord.py
+discord.py
 jishaku==2.5.0
 mcstatus
-psutil
