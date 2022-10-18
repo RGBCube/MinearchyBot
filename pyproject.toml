@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "MinearchyBot"
+name = "minearchy-bot"
 version = "1.0.0"
 description = "A simple bot for the Lands of Minearchy Discord server."
 authors = [ "RGBCube", "The Lands of Minearchy team" ]
@@ -17,6 +17,9 @@ flynt = "*"
 isort = "*"
 unimport = "*"
 pyright = "*"
+
+[tool.poetry.scripts]
+bot = "minearchy_bot.__main__:__main__"
 
 [tool.black]
 line-length = 100
