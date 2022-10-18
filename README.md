@@ -6,6 +6,6 @@ This is a simple bot made for the [Minearchy Discord](https://discord.gg/2n6T78J
 
 2: Edit the `config.example.json` to your liking and rename it to `config.json`.
 
-3: Install dependencies using `pip install --no-cache-dir -r requirements.txt`
+3: Install dependencies using `pip install -U poetry && poetry install --no-dev`.
 
-4: Run `python bot.py`.
+4: Run `python -m minearchy_bot`.

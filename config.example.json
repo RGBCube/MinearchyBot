@@ -1,4 +1,4 @@
 {
-    "BOT_TOKEN": "XXX(ENV works too)",
-    "WEBHOOK_URL": "XXX(ENV works too)"
+    "BOT_TOKEN": "",
+    "WEBHOOK_URL": ""
 }
