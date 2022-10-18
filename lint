@@ -15,4 +15,5 @@ flynt ./ -tc
 # run black
 black ./
 
+echo
 echo "Linting finished!"
