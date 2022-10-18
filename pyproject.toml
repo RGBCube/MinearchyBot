@@ -8,7 +8,7 @@ authors = [ "RGBCube", "The Lands of Minearchy team" ]
 python = "^3.10"
 "discord.py" = { version = "*", extras = [ "speed" ] }
 jishaku = "*"
-mcstatus = "*"
+mcstatus = "^9.4.2"
 uvloop = "*"
 
 [tool.poetry.dev-dependencies]
