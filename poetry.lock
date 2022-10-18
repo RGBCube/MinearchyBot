@@ -69,6 +69,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "asyncio-dgram"
+version = "2.1.2"
+description = "Higher level Datagram support for Asyncio"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+test = ["black (>=20.8b1)", "flake8 (>=3.8.3)", "mypy (>=0.812)", "mypy-extensions (>=0.4.3)", "pytest (>=5.4.3)", "pytest-asyncio (>=0.14.0)", "typed-ast (>=1.4.3)", "typing-extensions (>=3.10.0.0)"]
+
+[[package]]
 name = "attrs"
 version = "22.1.0"
 description = "Classes Without Boilerplate"
@@ -181,6 +192,22 @@ test = ["coverage[toml]", "pytest", "pytest-asyncio", "pytest-cov", "pytest-mock
 voice = ["PyNaCl (>=1.3.0,<1.6)"]
 
 [[package]]
+name = "dnspython"
+version = "2.2.1"
+description = "DNS toolkit"
+category = "main"
+optional = false
+python-versions = ">=3.6,<4.0"
+
+[package.extras]
+curio = ["curio (>=1.2,<2.0)", "sniffio (>=1.1,<2.0)"]
+dnssec = ["cryptography (>=2.6,<37.0)"]
+doh = ["h2 (>=4.1.0)", "httpx (>=0.21.1)", "requests (>=2.23.0,<3.0.0)", "requests-toolbelt (>=0.9.1,<0.10.0)"]
+idna = ["idna (>=2.1,<4.0)"]
+trio = ["trio (>=0.14,<0.20)"]
+wmi = ["wmi (>=1.5.1,<2.0.0)"]
+
+[[package]]
 name = "flynt"
 version = "0.76"
 description = "CLI tool to convert a python project's %-formatted strings to f-strings."
@@ -287,6 +314,18 @@ all = ["Cython", "IPython (>=0.13)", "IPython (>=0.13,<7.17.0)", "cmake", "cover
 build = ["Cython", "cmake", "ninja", "scikit-build"]
 ipython = ["IPython (>=0.13)", "IPython (>=0.13,<7.17.0)"]
 tests = ["IPython (>=0.13)", "IPython (>=0.13,<7.17.0)", "coverage[toml] (>=5.3)", "pytest (>=4.6.11)", "pytest-cov (>=2.10.1)", "ubelt (>=1.0.1)"]
+
+[[package]]
+name = "mcstatus"
+version = "9.4.2"
+description = "A library to query Minecraft Servers for their status and capabilities."
+category = "main"
+optional = false
+python-versions = ">=3.7,<4"
+
+[package.dependencies]
+asyncio-dgram = "2.1.2"
+dnspython = "2.2.1"
 
 [[package]]
 name = "multidict"
@@ -501,7 +540,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "e2a716df55680b27e26f9b2665c2eabbddd66725d158120bc8afb2ae3b885df5"
+content-hash = "fa703e8a9426930cc110ff9c87ab16045cc8f650c4fb82827b9a76816759a9ee"
 
 [metadata.files]
 aiodns = [
@@ -612,6 +651,10 @@ astunparse = [
 async-timeout = [
     {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},
     {file = "async_timeout-4.0.2-py3-none-any.whl", hash = "sha256:8ca1e4fcf50d07413d66d1a5e416e42cfdf5851c981d679a09851a6853383b3c"},
+]
+asyncio-dgram = [
+    {file = "asyncio-dgram-2.1.2.tar.gz", hash = "sha256:bc28a90bc0523009fb0da16ca983c1400ff403a315754d86e037910563697f91"},
+    {file = "asyncio_dgram-2.1.2-py3-none-any.whl", hash = "sha256:9ef55fc760f93c8212709329a1e28a1cf1c1f0fc8222f1be0227c2b7606a10a2"},
 ]
 attrs = [
     {file = "attrs-22.1.0-py2.py3-none-any.whl", hash = "sha256:86efa402f67bf2df34f51a335487cf46b1ec130d02b8d39fd248abfd30da551c"},
@@ -790,6 +833,10 @@ discord-py = [
     {file = "discord.py-2.0.1-py3-none-any.whl", hash = "sha256:aeb186348bf011708b085b2715cf92bbb72c692eb4f59c4c0b488130cc4c4b7e"},
     {file = "discord.py-2.0.1.tar.gz", hash = "sha256:309146476e986cb8faf038cd5d604d4b3834ef15c2d34df697ce5064bf5cd779"},
 ]
+dnspython = [
+    {file = "dnspython-2.2.1-py3-none-any.whl", hash = "sha256:a851e51367fb93e9e1361732c1d60dab63eff98712e503ea7d92e6eccb109b4f"},
+    {file = "dnspython-2.2.1.tar.gz", hash = "sha256:0f7569a4a6ff151958b64304071d370daa3243d15941a7beedf0c9fe5105603e"},
+]
 flynt = [
     {file = "flynt-0.76-py3-none-any.whl", hash = "sha256:fc122c5f589b0c4d019d7d33597f4925fd886a8e6fb3cbadb918e4baa3661687"},
     {file = "flynt-0.76.tar.gz", hash = "sha256:7a99c5a550ea9e8c21203f6999ed8ce69cbad7bc8465268469777cf06413193a"},
@@ -944,6 +991,10 @@ line-profiler = [
     {file = "line_profiler-3.5.1-cp39-cp39-win32.whl", hash = "sha256:2ea6ce644513bb53047c3081702371869a54ffafb2cb523c6c6b6589da623764"},
     {file = "line_profiler-3.5.1-cp39-cp39-win_amd64.whl", hash = "sha256:0c717a9c08255da9f79595330f20502a32806ba96823716b8a42b26ee7b0f183"},
     {file = "line_profiler-3.5.1.tar.gz", hash = "sha256:77400208bfbd5d4341938a9a3a4fb5194f5af7fc23b2d496c913755f8310e8b8"},
+]
+mcstatus = [
+    {file = "mcstatus-9.4.2-py3-none-any.whl", hash = "sha256:9081e402e3782284d15a804af5170738d79bf44cb14e0beeaa5d5c36ab42eff9"},
+    {file = "mcstatus-9.4.2.tar.gz", hash = "sha256:44f435f5334ad17b7c0156de1d02524a60a7af716c5731da7f5f6054058d0b83"},
 ]
 multidict = [
     {file = "multidict-6.0.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:0b9e95a740109c6047602f4db4da9949e6c5945cefbad34a1299775ddc9a62e2"},
