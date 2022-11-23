@@ -4,12 +4,11 @@ from typing import TYPE_CHECKING
 
 from discord.ext.commands import Cog, command, group
 from discord.ui import Button, View
+import requests
 
 if TYPE_CHECKING:
     from discord.ext.commands import Context
-
     from ..core import MinearchyBot
-
 
 class MinecraftServer(
     Cog,
@@ -54,8 +53,16 @@ class MinecraftServer(
     )
     async def status(self, ctx: Context) -> None:
         status = await self.bot.server.status()
-        await ctx.reply(f"The Minecraft server has {status.players.online} players online.")
+        
+        onlineJ = requests.get(f"https://api.mcsrvstat.us/2/{self.bot.server.java.ip}") # 
 
+        if status.players.online == 0:
+            message = f"Nobody is on the server at the moment."
+        else:
+            message = f"The Minecraft server has {status.players.online} player(s) online."
+        if onlineJ.json()["online"] and status.players.online == 0:
+            message = f"{message} The server is online."
+        await ctx.reply(message)
     @command(brief="Sends the link to the wiki.", help="Sends the link to the wiki.")
     async def wiki(self, ctx: Context) -> None:
         view = View()
