@@ -53,11 +53,11 @@ class MinecraftServer(
     )
     async def status(self, ctx: Context) -> None:
         status = await self.bot.server.status()
-        
+
         onlineJ = requests.get(f"https://api.mcsrvstat.us/2/{self.bot.server.java.ip}") # 
 
         if status.players.online == 0:
-            message = f"Nobody is on the server at the moment."
+            message = "Nobody is on the server at the moment."
         else:
             message = f"The Minecraft server has {status.players.online} player(s) online."
         if onlineJ.json()["online"] and status.players.online == 0:
