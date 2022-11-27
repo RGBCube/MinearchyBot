@@ -54,7 +54,13 @@ class MinecraftServer(
     )
     async def status(self, ctx: Context) -> None:
         status = await self.bot.server.status()
-        await ctx.reply(f"The Minecraft server has {status.players.online} players online.")
+
+        if (online := status.players.online) == 0:
+            message = "The Minecraft server has nobody online :(."
+        else:
+            message = f"The Minecraft server has {online} players online."
+
+        await ctx.reply(message)
 
     @command(brief="Sends the link to the wiki.", help="Sends the link to the wiki.")
     async def wiki(self, ctx: Context) -> None:
