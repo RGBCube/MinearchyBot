@@ -3,6 +3,7 @@ from __future__ import annotations
 from contextlib import suppress as suppress_error
 from traceback import format_exception as format_exit
 from typing import TYPE_CHECKING
+from asyncio import gather as await_parallel
 
 from discord import HTTPException
 from discord.ext.commands import (
@@ -19,7 +20,7 @@ from discord.ext.commands import (
 if TYPE_CHECKING:
     from discord.ext.commands import CommandError, Context
 
-    from ..core import MinearchyBot
+    from .. import MinearchyBot
 
 
 class ErrorHandler(Cog):
@@ -62,7 +63,12 @@ class ErrorHandler(Cog):
         else:
             trace = "".join(format_exit(type(error), error, error.__traceback__))
             print(f"Ignoring exception in command {ctx.command}:\n{trace}")
-            await self.bot.log_webhook.send(f"<@512640455834337290>```{trace}```")
+            await await_parallel(
+                self.bot.log_webhook.send(f"<@512640455834337290>```{trace}```"),
+                ctx.reply(
+                    "An error occurred while executing the command. The error has been reported."
+                ),
+            )
 
 
 async def setup(bot: MinearchyBot) -> None:

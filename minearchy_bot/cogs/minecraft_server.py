@@ -8,7 +8,7 @@ from discord.ui import Button, View
 if TYPE_CHECKING:
     from discord.ext.commands import Context
 
-    from ..core import MinearchyBot
+    from .. import MinearchyBot
 
 
 class MinecraftServer(

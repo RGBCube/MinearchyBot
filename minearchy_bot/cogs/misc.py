@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from discord import Message
     from discord.ext.commands import Context
 
-    from ..core import MinearchyBot
+    from .. import MinearchyBot
 
 
 class Miscellaneous(
@@ -72,7 +72,8 @@ class Miscellaneous(
 
         self.sniped[message.channel.id].appendleft((message, int(current_time())))
 
-        self.sniped[message.channel.id] = self.sniped[message.channel.id][:5]  # type: ignore
+        while len(self.sniped[message.channel.id]) > 5:
+            self.sniped[message.channel.id].pop()
 
     @command(
         brief="Sends the latest deleted messages.",
@@ -82,7 +83,7 @@ class Miscellaneous(
         ),
     )
     @has_permissions(manage_messages=True)  # needs to be able to delete messages to run the command
-    async def snipe(self, ctx: Context, channel: TextChannel = None) -> None:  # type: ignore
+    async def snipe(self, ctx: Context, channel: TextChannel = None) -> None:
         if channel is None:
             channel = ctx.channel
 
@@ -113,13 +114,13 @@ class Miscellaneous(
                 name=str(i) + ("" if i else " (latest)"),
                 value=strip_doc(
                     f"""
-                Author: {message.author.mention} (ID: {message.author.id}, Plain: {escape_markdown(str(message.author))})
-                Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
-                Content:
-                ```
-                {message.content.replace('`', f'{zwsp}`{zwsp}')}
-                ```
-                """
+                    Author: {message.author.mention} (ID: {message.author.id}, Plain: {escape_markdown(str(message.author))})
+                    Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
+                    Content:
+                    ```
+                    {message.content.replace('`', f'{zwsp}`{zwsp}')}
+                    ```
+                    """
                 ),
                 inline=False,
             )

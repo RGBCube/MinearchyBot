@@ -7,7 +7,7 @@ from discord import Member
 from discord.ext.commands import Cog, Context, command, has_permissions
 
 if TYPE_CHECKING:
-    from ..core import MinearchyBot
+    from .. import MinearchyBot
 
 
 class Moderation(Cog):
