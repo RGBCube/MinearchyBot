@@ -12,7 +12,7 @@ from . import MinearchyBot
 def main() -> None:
     install_uvloop()
 
-    with (Path(__file__).parent.parent / "config.json").open() as f:
+    with (Path(__file__).parent / "config.json").open() as f:
         config = parse_json(f)
 
     for key in ("HIDE", "NO_UNDERSCORE"):

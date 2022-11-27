@@ -4,7 +4,7 @@ This is a simple bot made for the [Minearchy Discord](https://discord.gg/2n6T78J
 ## Installing
 1: Clone this repo and `cd` into it.
 
-2: Edit the `config.example.json` to your liking and rename it to `config.json`.
+2: Edit the `./minearchy_bot/config.example.json` to your liking and rename it to `config.json`.
 
 3: Install dependencies using `./install`.
 
