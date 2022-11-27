@@ -12,11 +12,9 @@ mcstatus = "*"
 uvloop = "*"
 
 [tool.poetry.dev-dependencies]
-black = "*"
 flynt = "*"
 isort = "*"
 unimport = "*"
-pyright = "*"
 
 [tool.poetry.scripts]
 bot = "minearchy_bot.__main__:main"
@@ -28,42 +26,7 @@ preview = true
 [tool.isort]
 py_version = 310
 add_imports = ["from __future__ import annotations"]
-line_length = 79
+line_length = 100
 profile = "black"
 combine_as_imports = true
 combine_star = true
-
-[tool.pyright]
-pythonVersion = "3.10"
-typeCheckingMode = "basic"
-strictListInference = true
-strictDictionaryInference = true
-strictSetInference = true
-reportMissingModuleSource = "error"
-reportAssertAlwaysTrue = "error"
-reportInvalidStringEscapeSequence = "error"
-reportInvalidTypeVarUse = "error"
-reportSelfClsParameterName = "error"
-reportUnsupportedDunderAll = "error"
-reportUnusedExpression = "error"
-reportWildcardImportFromLibrary = "error"
-reportConstantRedefinition = "error"
-reportDuplicateImport = "error"
-reportImportCycles = "error"
-reportIncompatibleVariableOverride = "error"
-reportIncompleteStub = "error"
-reportInconsistentConstructor = "error"
-reportInvalidStubStatement = "error"
-reportMatchNotExhaustive = "error"
-reportMissingParameterType = "error"
-reportTypeCommentUsage = "error"
-reportUnnecessaryCast = "error"
-reportUnnecessaryComparison = "error"
-reportUnnecessaryIsInstance = "error"
-reportUnusedClass = "error"
-reportUnusedVariable = "error"
-reportUntypedClassDecorator = "error"
-reportUntypedNamedTuple = "error"
-reportCallInDefaultInitializer = "error"
-reportPropertyTypeMismatch = "error"
-reportUnnecessaryTypeIgnoreComment = "error"
