@@ -30,7 +30,7 @@ jobs:
       - name: Run Isort
         run: |
           isort ./
-          python ./.github/workflows/lint.py
+          python ./.github/workflows/scripts/lint.py
 
       - name: Run Black
         run: black ./
