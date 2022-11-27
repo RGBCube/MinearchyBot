@@ -19,7 +19,7 @@ unimport = "*"
 pyright = "*"
 
 [tool.poetry.scripts]
-bot = "minearchy_bot.__main__:__main__"
+bot = "minearchy_bot.__main__:main"
 
 [tool.black]
 line-length = 100

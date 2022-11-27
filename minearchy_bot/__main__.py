@@ -8,14 +8,16 @@ from uvloop import install as install_uvloop
 
 from . import MinearchyBot
 
-install_uvloop()
 
-with (Path(__file__).parent.parent / "config.json").open() as f:
-    config = parse_json(f)
+def main() -> None:
+    install_uvloop()
 
-for key in ("HIDE", "NO_UNDERSCORE"):
-    env[f"JISHAKU_{key}"] = "True"
+    with (Path(__file__).parent.parent / "config.json").open() as f:
+        config = parse_json(f)
 
-bot = MinearchyBot(token=config["BOT_TOKEN"], webhook_url=config["WEBHOOK_URL"])
+    for key in ("HIDE", "NO_UNDERSCORE"):
+        env[f"JISHAKU_{key}"] = "True"
 
-bot.run()
+    bot = MinearchyBot(token=config["BOT_TOKEN"], webhook_url=config["WEBHOOK_URL"])
+
+    bot.run()
