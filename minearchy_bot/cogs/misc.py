@@ -71,7 +71,7 @@ class Miscellaneous(
             return
 
         await message.author.edit(nick=message.author.display_name[5:])
-        await message.channel.send(f"Welcome back {escape_markdown(message.author.mention)}! I've unset your AFK status.")
+        await message.channel.send(f"Welcome back {message.author.mention}! I've unset your AFK status.")
 
     @command(
         brief="Sets you as AFK.",
