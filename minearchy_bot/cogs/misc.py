@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections import defaultdict as DefaultDict, deque as Deque
 from datetime import timedelta as TimeDelta
 from inspect import cleandoc as strip
 from io import BytesIO
@@ -8,8 +7,7 @@ from platform import python_version
 from time import monotonic as get_monotonic, time as get_time
 from typing import TYPE_CHECKING
 
-from discord import CategoryChannel, Color, Embed, File, TextChannel
-from discord.ext import commands
+from discord import CategoryChannel, File
 from discord.ext.commands import Cog, command
 from discord.utils import escape_markdown
 
@@ -30,7 +28,6 @@ class Miscellaneous(
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
         self.bot.help_command.cog = self
-        self.sniped = DefaultDict(Deque)
 
     @override
     def cog_unload(self) -> None:
@@ -148,68 +145,6 @@ class Miscellaneous(
 
         await message.author.edit(nick=message.author.display_name[5:])
         await message.channel.send(f"Welcome back {message.author.mention}! I've unset your AFK status.")
-
-    @command(
-        brief="Sends the latest deleted messages.",
-        help=(
-            "Sends the last 5 deleted messages in a specified channel.\nIf the channel"
-            " isn't specified, it uses the current channel."
-        ),
-    )
-    @commands.has_permissions(manage_messages=True)  # needs to be able to delete messages to run the command
-    async def snipe(self, ctx: Context, channel: TextChannel | None = None) -> None:
-        if channel is None:
-            channel = ctx.channel
-
-        logs = self.sniped[channel.id]
-
-        if not logs:
-            await ctx.reply(
-                "There are no messages to be sniped in"
-                f" {'this channel.' if channel.id == ctx.channel.id else channel.mention}"
-            )
-            return
-
-        embed = Embed(
-            title=(
-                "Showing last 5 deleted messages for"
-                f" {'the current channel' if ctx.channel.id == channel.id else channel}"
-            ),
-            description="The lower the number is, the more recent it got deleted.",
-            color=Color.random(),
-        )
-
-        zwsp = "\uFEFF"
-
-        for i, log in reversed(list(enumerate(logs))):
-            message, ts = log
-
-            embed.add_field(
-                name=str(i) + ("" if i else " (latest)"),
-                value=strip(
-                    f"""
-                    Author: {message.author.mention} (ID: {message.author.id}, Plain: {escape_markdown(str(message.author))})
-                    Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
-                    Content:
-                    ```
-                    {message.content.replace('`', f'{zwsp}`{zwsp}')}
-                    ```
-                    """
-                ),
-                inline=False,
-            )
-
-        await ctx.reply(embed=embed)
-
-    @Cog.listener()
-    async def on_message_delete(self, message: Message) -> None:
-        if not message.guild:
-            return
-
-        self.sniped[message.channel.id].appendleft((message, int(get_time())))
-
-        while len(self.sniped[message.channel.id]) > 5:
-            self.sniped[message.channel.id].pop()
 
 
 async def setup(bot: MinearchyBot) -> None:
