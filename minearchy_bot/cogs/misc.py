@@ -100,10 +100,10 @@ class Miscellaneous(
 
                 else:
                     for thing, overwrites in channel.overwrites.items():
-                        parent_overwrites = channel.category.overwrites[thing]
+                        parent_overwrites = channel.category.overwrites.get(thing)
 
                         allows, denies = overwrites.pair()
-                        parent_allows, parent_denies = parent_overwrites.pair()
+                        parent_allows, parent_denies = parent_overwrites.pair() if parent_overwrites else ((), ())
 
                         for allow in allows:
                             if allow not in parent_allows:
