@@ -59,6 +59,8 @@ class Utils(Cog):
                 string.append(f"category {channel.name}:")
                 string.append(f"  id: {channel.id}")
 
+                perms = []
+
                 for thing, overwrites in channel.overwrites.items():
                     if isinstance(thing, Role):
                         typ = "role"
@@ -70,8 +72,8 @@ class Utils(Cog):
                         typ = repr(thing.type)
                         name = "unknown"
 
-                    string.append(f"    {typ} {name}:")
-                    string.append(f"    id: {thing.id}")
+                    perms.append(f"    {typ} {name}:")
+                    perms.append(f"      id: {thing.id}")
 
                     allow, deny = [], []
 
@@ -82,14 +84,14 @@ class Utils(Cog):
                             deny.append(perm)
 
                     if allow or deny:
-                        string.append("    permissions:")
+                        perms.append("      permissions:")
 
                         for a in allow:
-                            string.append(f"      {a}: ✅")
+                            perms.append(f"        {a}: ✅")
                         for d in deny:
-                            string.append(f"      {d}: ❌")
+                            perms.append(f"        {d}: ❌")
 
-                    string.append("    channels:")
+                    perms.append("  channels:")
 
                     for child in channel.channels:
                         if isinstance(child, TextChannel):
@@ -103,8 +105,10 @@ class Utils(Cog):
                         else:
                             typ = "unknown"
 
-                        string.append(f"      {typ} channel `{child.name}`:")
-                        string.append(f"        id: {child.id}")
+                        string.append(f"    {typ} channel `{child.name}`:")
+                        string.append(f"      id: {child.id}")
+
+                        child_perms = []
 
                         for child_thing, child_overwrites in child.overwrites.items():
                             if isinstance(child_thing, Role):
@@ -117,8 +121,8 @@ class Utils(Cog):
                                 typ = repr(child_thing.type)
                                 name = "unknown"
 
-                            string.append(f"          {typ} {name}:")
-                            string.append(f"          id: {child_thing.id}")
+                            child_perms.append(f"        {typ} {name}:")
+                            child_perms.append(f"          id: {child_thing.id}")
 
                             allow, deny = [], []
 
@@ -142,6 +146,13 @@ class Utils(Cog):
                                 for d in deny:
                                     string.append(f"            {d}: ❌")
 
+                        if child_perms:
+                            string.append("      permissions:")
+                            string.extend(child_perms)
+                if perms:
+                    string.append("  permissions:")
+                    string.extend(perms)
+
             else:
                 if isinstance(channel, TextChannel):
                     typ = "text"
@@ -156,6 +167,8 @@ class Utils(Cog):
 
                 string.append(f"{typ} channel `{channel.name}`:")
                 string.append(f"  id: {channel.id}")
+
+                perms = []
 
                 for thing, overwrites in channel.overwrites.items():
                     if isinstance(thing, Role):
@@ -186,6 +199,10 @@ class Utils(Cog):
                             string.append(f"      {a}: ✅")
                         for d in deny:
                             string.append(f"      {d}: ❌")
+
+                if perms:
+                    string.append("  permissions:")
+                    string.extend(perms)
 
         await ctx.reply(
             file=File(
