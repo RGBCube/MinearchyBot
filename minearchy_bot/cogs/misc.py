@@ -69,17 +69,23 @@ class Miscellaneous(
     async def on_message(self, message: Message) -> None:
         name = message.author.display_name
 
-        if not name.startswith("[AFK]"):
+        if not name.lower().startswith("[AFK]"):
             return
 
-        await message.author.edit(nick=name.removeprefix("[AFK]"))
-        await message.channel.send(f"Welcome back {escape_markdown(message.author.mention)}! I've unset your AFK status.")
+        await message.author.edit(nick=name[5:])
+        await message.channel.send(
+            f"Welcome back {escape_markdown(message.author.mention)}! I've unset your AFK status.")
 
     @command(
         brief="Sets you as AFK.",
         help="Sets you as AFK.",
     )
     async def afk(self, ctx: Context) -> None:
+        if ctx.me.top_role.position <= ctx.author.top_role.position:
+            await ctx.reply(
+                "I cannot set you as AFK because my role is lower than yours. You can edit your nickname to set yourself as AFK (Add [AFK] to the start of it.).")
+            return
+
         await ctx.author.edit(nick=f"[AFK] {ctx.author.display_name}")
         await ctx.reply("Set your status to AFK. You can now touch grass freely 🌲.")
 
