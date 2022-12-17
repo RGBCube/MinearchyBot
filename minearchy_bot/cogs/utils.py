@@ -63,11 +63,11 @@ class Utils(Cog):
                     if isinstance(thing, Role):
                         typ = "role"
                         name = thing.name
-                    if isinstance(thing, Member):
+                    elif isinstance(thing, Member):
                         typ = "member"
                         name = f"{thing.name}#{thing.discriminator}"
                     else:
-                        typ = "unknown"
+                        typ = repr(thing.type)
                         name = "unknown"
 
                     string.append(f"    {typ} {name}:")
@@ -110,7 +110,7 @@ class Utils(Cog):
                             if isinstance(child_thing, Role):
                                 typ = "role"
                                 name = child_thing.name
-                            if isinstance(child_thing, Member):
+                            elif isinstance(child_thing, Member):
                                 typ = "member"
                                 name = f"{child_thing.name}#{child_thing.discriminator}"
                             else:
@@ -161,11 +161,11 @@ class Utils(Cog):
                     if isinstance(thing, Role):
                         typ = "role"
                         name = thing.name
-                    if isinstance(thing, Member):
+                    elif isinstance(thing, Member):
                         typ = "member"
                         name = f"{thing.name}#{thing.discriminator}"
                     else:
-                        typ = "unknown"
+                        typ = repr(thing.type)
                         name = "unknown"
 
                     string.append(f"    {typ} {name}:")
