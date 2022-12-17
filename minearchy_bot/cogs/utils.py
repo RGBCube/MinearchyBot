@@ -51,8 +51,8 @@ class Utils(Cog):
         string = []
 
         for channel in ctx.guild.channels:
-            # Only root level categories.
-            if hasattr(channel, "category") or channel.category is not None:
+            # Only root level channels.
+            if getattr(channel, "category", False):
                 continue
 
             if isinstance(channel, CategoryChannel):
