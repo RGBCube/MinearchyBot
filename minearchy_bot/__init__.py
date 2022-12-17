@@ -19,7 +19,7 @@ from discord.ext.commands import (
 )
 
 from .minecraft_server import GeyserServer
-from .util import override
+from .utils import override
 
 
 class MinearchyBot(CommandsBot):

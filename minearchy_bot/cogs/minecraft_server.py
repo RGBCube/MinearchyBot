@@ -30,7 +30,10 @@ class MinecraftServer(
             f" `{self.bot.server.bedrock.ip}`\nNote: Minecraft 1.19 is required to join."
         )
 
-    @ip.command(brief="Sends the Java edition IP.", help="Sends the Java edition IP.")
+    @ip.command(
+        brief="Sends the Java edition IP.",
+        help="Sends the Java edition IP."
+    )
     async def java(self, ctx: Context) -> None:
         await ctx.reply(
             "The IP to connect on Minecraft Java edition is"
@@ -62,7 +65,10 @@ class MinecraftServer(
 
         await ctx.reply(message)
 
-    @command(brief="Sends the link to the wiki.", help="Sends the link to the wiki.")
+    @command(
+        brief="Sends the link to the wiki.",
+        help="Sends the link to the wiki."
+    )
     async def wiki(self, ctx: Context) -> None:
         view = View()
         view.add_item(
@@ -134,14 +140,10 @@ class MinecraftServer(
         await ctx.reply(view=view)
 
     @command(
+        name="staff-application",
         aliases=(
             "apply",
-            "staffapply",
-            "applystaff",
-            "applyforstaff",
-            "staff-application",
             "staff-applications",
-            "staff_applications",
         ),
         brief="Sends the link to the staff application.",
         help="Sends the link to the staff application.",

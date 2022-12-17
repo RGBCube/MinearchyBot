@@ -1,19 +1,20 @@
 #!/bin/bash
 
-# run unimport
+# Run Unimport.
 unimport ./ --ignore-init --gitignore -r
 
-# run isort
+# Run Isort.
 isort ./
 
-# run our lint script
+# Run our lint script.
 python ./.github/workflows/scripts/lint.py
 
-# run flynt
+# Run Flynt.
 flynt ./ -tc
 
-# run black
+# Run Black.
 black ./
 
+echo
 echo
 echo "Linting finished!"

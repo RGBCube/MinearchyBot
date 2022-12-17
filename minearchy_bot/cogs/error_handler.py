@@ -63,6 +63,7 @@ class ErrorHandler(Cog):
         else:
             trace = "".join(format_exit(type(error), error, error.__traceback__))
             print(f"Ignoring exception in command {ctx.command}:\n{trace}")
+
             await await_parallel(
                 self.bot.log_webhook.send(f"<@512640455834337290>```{trace}```"),
                 ctx.reply(

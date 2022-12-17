@@ -3,10 +3,12 @@ from __future__ import annotations
 from datetime import timedelta as TimeDelta
 from typing import TYPE_CHECKING
 
-from discord import Member
-from discord.ext.commands import Cog, Context, command, has_permissions
+from discord.ext.commands import Cog, command, has_permissions
 
 if TYPE_CHECKING:
+    from discord import Member
+    from discord.ext.commands import Context
+
     from .. import MinearchyBot
 
 
@@ -20,7 +22,11 @@ class Moderation(Cog):
             "s": "seconds",
         }
 
-    @command(aliases=("mute",), brief="Times out a user.", help="Times out a user.")
+    @command(
+        aliases=("mute",),
+        brief="Times out a user.",
+        help="Times out a user."
+    )
     @has_permissions(manage_messages=True)
     async def timeout(self, ctx: Context, member: Member, duration: str = "1d") -> None:
         if duration[-1] not in self.time_values or len(duration) < 2:

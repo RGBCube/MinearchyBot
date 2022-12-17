@@ -8,14 +8,14 @@ from platform import python_version
 from time import monotonic as ping_time, time as current_time
 from typing import TYPE_CHECKING
 
-from discord import CategoryChannel, Color, Embed, TextChannel, File
+from discord import CategoryChannel, Color, Embed, File
 from discord.ext.commands import Cog, command, has_permissions
 from discord.utils import escape_markdown
 
-from ..util import override
+from ..utils import override
 
 if TYPE_CHECKING:
-    from discord import Message
+    from discord import Message, TextChannel
     from discord.ext.commands import Context
 
     from .. import MinearchyBot
@@ -38,7 +38,7 @@ class Miscellaneous(
 
     @command(brief="Hello!", help="Hello!")
     async def hello(self, ctx: Context) -> None:
-        await ctx.reply(f"Hi {escape_markdown(ctx.author.name)}, yes the bot is running :)")
+        await ctx.reply(f"Hi {escape_markdown(ctx.author.name)}, yes the bot is running :).")
 
     @command(
         brief="Sends the total members in the server.",
@@ -47,14 +47,20 @@ class Miscellaneous(
     async def members(self, ctx: Context) -> None:
         await ctx.reply(f"There are `{ctx.guild.member_count}` users in this server.")
 
-    @command(brief="Sends the bots ping.", help="Sends the bots ping.")
+    @command(
+        brief="Sends the bots ping.",
+        help="Sends the bots ping."
+    )
     async def ping(self, ctx: Context) -> None:
         ts = ping_time()
         message = await ctx.reply("Pong!")
         ts = ping_time() - ts
         await message.edit(content=f"Pong! `{int(ts * 1000)}ms`")
 
-    @command(brief="Sends info about the bot.", help="Sends info about the bot.")
+    @command(
+        brief="Sends info about the bot.",
+        help="Sends info about the bot."
+    )
     async def info(self, ctx: Context) -> None:
         await ctx.reply(
             strip_doc(
@@ -66,56 +72,51 @@ class Miscellaneous(
             )
         )
 
-    @command(hidden=True)
+    @command(
+        name="channel-perm-tree",
+        hidden=True
+    )
     async def channel_perm_tree(self, ctx: Context) -> None:
-        def overwrites_list(overwrites: list) -> list[str]:
-            text: list[str] = []
-
-            for thing, overwrite in overwrites:
-                text.append(f"({type(thing)}) {thing.name}:")
-
-                allows, denies = overwrite.pair()
-
-                for allow in allows:
-                    text.append(f"    ✅ {allow[0]}")
-                for deny in denies:
-                    text.append(f"    ❌ {deny[0]}")
-
-            return text
-
-        text: list[str] = []
+        string = []
 
         for channel in ctx.guild.channels:
-            if channel is CategoryChannel:
-                text.append(f"Category: {channel.name}")
+            indent = "    " if getattr(channel, "category", False) else ""
 
-            # not a category and root level
-            elif channel.category is None:
-                text.append(f"Channel: {channel.name}")
+            string.append(indent + f"{str(type(channel)).lower()} {channel.name}:")
 
-            # has a parent
+            if channel.permissions_synced:
+                string.append(indent*2 + "permissions: synced")
             else:
-                text.append(f"    Channel: {channel.name}")
+                string.append(indent*2 + "permissions:")
 
-            if (parent := getattr(channel, "category")) is None:
-                text.extend(["    " + o for o in overwrites_list(channel.overwrites.items())])
-            else:
-                text.extend(
-                    [
-                        "        " + o
-                        for o in
-                        overwrites_list(
-                            channel.overwrites.items() - parent.overwrites.items()
-                        )
-                    ]
-                )
+                if isinstance(channel, CategoryChannel):
+                    for thing, overwrites in channel.overwrites.items():
+                        allows, denies = overwrites.pair()
+
+                        for allow in allows:
+                            string.append(indent*3 + f"✅ {allow[0]}")
+                        for deny in denies:
+                            string.append(indent*3 + f"❌ {deny[0]}")
+
+                else:
+                    for thing, overwrites in channel.overwrites.items():
+                        parent_overwrites = channel.category.overwrites[thing]
+
+                        allows, denies = overwrites.pair()
+                        parent_allows, parent_denies = parent_overwrites.pair()
+
+                        for allow in allows:
+                            if allow not in parent_allows:
+                                string.append(indent*3 + f"✅ {allow[0]}")
+
+                        for deny in denies:
+                            if deny not in parent_denies:
+                                string.append(indent*3 + f"❌ {deny[0]}")
 
         await ctx.reply(
             file=File(
-                BytesIO(
-                    bytes("\n".join(text), "utf-8")
-                ),
-                "perms.txt"
+                BytesIO("\n".join(string).encode()),
+                filename="channel-perm-tree.txt"
             )
         )
 
@@ -154,7 +155,7 @@ class Miscellaneous(
         ),
     )
     @has_permissions(manage_messages=True)  # needs to be able to delete messages to run the command
-    async def snipe(self, ctx: Context, channel: TextChannel = None) -> None:
+    async def snipe(self, ctx: Context, channel: TextChannel | None = None) -> None:
         if channel is None:
             channel = ctx.channel
 
