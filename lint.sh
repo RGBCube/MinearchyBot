@@ -7,7 +7,7 @@ unimport ./ --ignore-init --gitignore -r
 isort ./
 
 # run our lint script
-python ./.github/workflows/lint.py
+python ./.github/workflows/scripts/lint.py
 
 # run flynt
 flynt ./ -tc

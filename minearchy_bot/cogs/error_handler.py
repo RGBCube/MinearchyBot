@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from asyncio import gather as await_parallel
 from contextlib import suppress as suppress_error
 from traceback import format_exception as format_exit
 from typing import TYPE_CHECKING
-from asyncio import gather as await_parallel
 
 from discord import HTTPException
 from discord.ext.commands import (

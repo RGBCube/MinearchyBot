@@ -2,9 +2,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent / "minearchy_bot"
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent / "minearchy_bot"
 
 for fp in ROOT_DIR.rglob("__init__.py"):
+    if fp.parent.name == "minearchy_bot":
+        continue
+
     if not (content := fp.read_text()):
         continue
 
