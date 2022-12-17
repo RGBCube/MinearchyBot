@@ -51,7 +51,7 @@ class Miscellaneous(
         help="Sets you as AFK.",
     )
     async def afk(self, ctx: Context) -> None:
-        # no error cuz it will un-afk them
+        # No error because it will un-afk the caller.
         if ctx.author.display_name.lower().startswith("[AFK]"):
             return
 

@@ -4,7 +4,16 @@ from io import BytesIO
 from time import monotonic as get_monotonic
 from typing import TYPE_CHECKING
 
-from discord import CategoryChannel, File
+from discord import (
+    CategoryChannel,
+    File,
+    ForumChannel,
+    Member,
+    Role,
+    StageChannel,
+    TextChannel,
+    VoiceChannel,
+)
 from discord.ext.commands import Cog, command
 
 if TYPE_CHECKING:
@@ -42,39 +51,141 @@ class Utils(Cog):
         string = []
 
         for channel in ctx.guild.channels:
-            ind = "    "
-            ind_nr = 1 if getattr(channel, "category", False) else 0
+            # Only root level categories.
+            if hasattr(channel, "category") or channel.category is not None:
+                continue
 
-            string.append(ind*ind_nr + f"{'category' if isinstance(channel, CategoryChannel) else 'channel'} {channel.name}:")
+            if isinstance(channel, CategoryChannel):
+                string.append(f"category {channel.name}:")
+                string.append(f"  id: {channel.id}")
 
-            if channel.permissions_synced:
-                string.append(ind*(ind_nr+1) + "permissions: synced")
+                for thing, overwrites in channel.overwrites.items():
+                    if isinstance(thing, Role):
+                        typ = "role"
+                        name = thing.name
+                    if isinstance(thing, Member):
+                        typ = "member"
+                        name = f"{thing.name}#{thing.discriminator}"
+                    else:
+                        typ = repr(thing.type)
+                        name = "unknown"
+
+                    string.append(f"    {typ} {name}:")
+                    string.append(f"    id: {thing.id}")
+
+                    allow, deny = [], []
+
+                    for perm, value in overwrites._values.items():
+                        if value is True:
+                            allow.append(perm)
+                        elif value is False:
+                            deny.append(perm)
+
+                    if allow or deny:
+                        string.append("    permissions:")
+
+                        for a in allow:
+                            string.append(f"      {a}: ✅")
+                        for d in deny:
+                            string.append(f"      {d}: ❌")
+
+                    string.append("    channels:")
+
+                    for child in channel.channels:
+                        if isinstance(child, TextChannel):
+                            typ = "text"
+                        elif isinstance(child, ForumChannel):
+                            typ = "forum"
+                        elif isinstance(child, VoiceChannel):
+                            typ = "voice"
+                        elif isinstance(child, StageChannel):
+                            typ = "stage"
+                        else:
+                            typ = "unknown"
+
+                        string.append(f"      {typ} channel `{child.name}`:")
+                        string.append(f"        id: {child.id}")
+
+                        for child_thing, child_overwrites in child.overwrites.items():
+                            if isinstance(child_thing, Role):
+                                typ = "role"
+                                name = child_thing.name
+                            if isinstance(child_thing, Member):
+                                typ = "member"
+                                name = f"{child_thing.name}#{child_thing.discriminator}"
+                            else:
+                                typ = repr(child_thing.type)
+                                name = "unknown"
+
+                            string.append(f"          {typ} {name}:")
+                            string.append(f"          id: {child_thing.id}")
+
+                            allow, deny = [], []
+
+                            for perm, value in overwrites._values.items():
+                                channel_corresponding_value = child_overwrites._values.get(perm)
+
+                                unique = value is not channel_corresponding_value
+                                if not unique:
+                                    continue
+
+                                if value is True:
+                                    allow.append(perm)
+                                elif value is False:
+                                    deny.append(perm)
+
+                            if allow or deny:
+                                string.append("          permissions:")
+
+                                for a in allow:
+                                    string.append(f"            {a}: ✅")
+                                for d in deny:
+                                    string.append(f"            {d}: ❌")
+
             else:
-                string.append(ind*(ind_nr+1) + "permissions:")
-
-                if not channel.category:
-                    for thing, overwrites in channel.overwrites.items():
-                        allows, denies = overwrites.pair()
-
-                        for allow in allows:
-                            string.append(ind*(ind_nr+2) + f"{allow[0]}: ✅")
-                        for deny in denies:
-                            string.append(ind*(ind_nr+2) + f"{deny[0]}: ❌")
-
+                if isinstance(channel, TextChannel):
+                    typ = "text"
+                elif isinstance(channel, ForumChannel):
+                    typ = "forum"
+                elif isinstance(channel, VoiceChannel):
+                    typ = "voice"
+                elif isinstance(channel, StageChannel):
+                    typ = "stage"
                 else:
-                    for thing, overwrites in channel.overwrites.items():
-                        parent_overwrites = channel.category.overwrites.get(thing)
+                    typ = "unknown"
 
-                        allows, denies = overwrites.pair()
-                        parent_allows, parent_denies = parent_overwrites.pair() if parent_overwrites else ((), ())
+                string.append(f"{typ} channel `{channel.name}`:")
+                string.append(f"  id: {channel.id}")
 
-                        for allow in allows:
-                            if allow not in parent_allows:
-                                string.append(ind*(ind_nr+2) + f"{allow[0]}: ✅")
+                for thing, overwrites in channel.overwrites.items():
+                    if isinstance(thing, Role):
+                        typ = "role"
+                        name = thing.name
+                    if isinstance(thing, Member):
+                        typ = "member"
+                        name = f"{thing.name}#{thing.discriminator}"
+                    else:
+                        typ = repr(thing.type)
+                        name = "unknown"
 
-                        for deny in denies:
-                            if deny not in parent_denies:
-                                string.append(ind*(ind_nr+2) + f"{deny[0]}: ❌")
+                    string.append(f"    {typ} {name}:")
+                    string.append(f"    id: {thing.id}")
+
+                    allow, deny = [], []
+
+                    for perm, value in overwrites._values.items():
+                        if value is True:
+                            allow.append(perm)
+                        elif value is False:
+                            deny.append(perm)
+
+                    if allow or deny:
+                        string.append("    permissions:")
+
+                        for a in allow:
+                            string.append(f"      {a}: ✅")
+                        for d in deny:
+                            string.append(f"      {d}: ❌")
 
         await ctx.reply(
             file=File(

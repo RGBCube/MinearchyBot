@@ -49,7 +49,7 @@ class Moderation(Cog):
         # days, hours, minutes, seconds
         clean_time_name = self.time_values[duration[-1]]
 
-        # this is so cursed but works
+        # This is so cursed but works.
         await member.timeout(
             TimeDelta(**{clean_time_name: time}), reason=f"Timed out by moderator {ctx.author}"
         )
@@ -63,7 +63,8 @@ class Moderation(Cog):
             " isn't specified, it uses the current channel."
         ),
     )
-    @commands.has_permissions(manage_messages=True)  # needs to be able to delete messages to run the command
+    # Needs to be able to delete messages to run the command.
+    @commands.has_permissions(manage_messages=True)
     async def snipe(self, ctx: Context, channel: TextChannel | None = None) -> None:
         if channel is None:
             channel = ctx.channel
