@@ -67,12 +67,10 @@ class Miscellaneous(
 
     @Cog.listener()
     async def on_message(self, message: Message) -> None:
-        name = message.author.display_name
-
-        if not name.lower().startswith("[AFK]"):
+        if not message.author.display_name.lower().startswith("[AFK]"):
             return
 
-        await message.author.edit(nick=name[5:])
+        await message.author.edit(nick=message.author.display_name[5:])
         await message.channel.send(f"Welcome back {escape_markdown(message.author.mention)}! I've unset your AFK status.")
 
     @command(
