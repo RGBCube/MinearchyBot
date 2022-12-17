@@ -35,6 +35,17 @@ class Miscellaneous(
         self.bot.help_command.cog = None
         self.bot.help_command.hidden = True
 
+    @command(brief="Hello!", help="Hello!")
+    async def hello(self, ctx: Context) -> None:
+        await ctx.reply(f"Hi {escape_markdown(ctx.author.name)}, yes the bot is running :)")
+
+    @command(
+        brief="Sends the total members in the server.",
+        help="Sends the total members in the server.",
+    )
+    async def members(self, ctx: Context) -> None:
+        await ctx.reply(f"There are `{ctx.guild.member_count}` users in this server.")
+
     @command(brief="Sends the bots ping.", help="Sends the bots ping.")
     async def ping(self, ctx: Context) -> None:
         ts = ping_time()
@@ -53,25 +64,6 @@ class Miscellaneous(
             """
             )
         )
-
-    @command(brief="Hello!", help="Hello!")
-    async def hello(self, ctx: Context) -> None:
-        await ctx.reply(f"Hi {escape_markdown(ctx.author.name)}, yes the bot is running :)")
-
-    @command(
-        brief="Sends the total members in the server.",
-        help="Sends the total members in the server.",
-    )
-    async def members(self, ctx: Context) -> None:
-        await ctx.reply(f"There are `{ctx.guild.member_count}` users in this server.")
-
-    @Cog.listener()
-    async def on_message(self, message: Message) -> None:
-        if not message.author.display_name.upper().startswith("[AFK]"):
-            return
-
-        await message.author.edit(nick=message.author.display_name[5:])
-        await message.channel.send(f"Welcome back {message.author.mention}! I've unset your AFK status.")
 
     @command(
         brief="Sets you as AFK.",
@@ -93,14 +85,12 @@ class Miscellaneous(
         await ctx.reply("Set your status to AFK. You can now touch grass freely 🌲.")
 
     @Cog.listener()
-    async def on_message_delete(self, message: Message) -> None:
-        if not message.guild:
+    async def on_message(self, message: Message) -> None:
+        if not message.author.display_name.upper().startswith("[AFK]"):
             return
 
-        self.sniped[message.channel.id].appendleft((message, int(current_time())))
-
-        while len(self.sniped[message.channel.id]) > 5:
-            self.sniped[message.channel.id].pop()
+        await message.author.edit(nick=message.author.display_name[5:])
+        await message.channel.send(f"Welcome back {message.author.mention}! I've unset your AFK status.")
 
     @command(
         brief="Sends the latest deleted messages.",
@@ -153,6 +143,16 @@ class Miscellaneous(
             )
 
         await ctx.reply(embed=embed)
+
+    @Cog.listener()
+    async def on_message_delete(self, message: Message) -> None:
+        if not message.guild:
+            return
+
+        self.sniped[message.channel.id].appendleft((message, int(current_time())))
+
+        while len(self.sniped[message.channel.id]) > 5:
+            self.sniped[message.channel.id].pop()
 
 
 async def setup(bot: MinearchyBot) -> None:
