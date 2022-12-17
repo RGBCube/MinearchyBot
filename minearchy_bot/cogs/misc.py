@@ -2,14 +2,15 @@ from __future__ import annotations
 
 from collections import defaultdict as DefaultDict, deque as Deque
 from datetime import timedelta as TimeDelta
-from inspect import cleandoc as strip_doc
+from inspect import cleandoc as strip
 from io import BytesIO
 from platform import python_version
-from time import monotonic as ping_time, time as current_time
+from time import monotonic as get_monotonic, time as get_time
 from typing import TYPE_CHECKING
 
 from discord import CategoryChannel, Color, Embed, File, TextChannel
-from discord.ext.commands import Cog, command, has_permissions
+from discord.ext import commands
+from discord.ext.commands import Cog, command
 from discord.utils import escape_markdown
 
 from ..utils import override
@@ -52,9 +53,9 @@ class Miscellaneous(
         help="Sends the bots ping."
     )
     async def ping(self, ctx: Context) -> None:
-        ts = ping_time()
+        ts = get_monotonic()
         message = await ctx.reply("Pong!")
-        ts = ping_time() - ts
+        ts = get_monotonic() - ts
         await message.edit(content=f"Pong! `{int(ts * 1000)}ms`")
 
     @command(
@@ -63,11 +64,11 @@ class Miscellaneous(
     )
     async def info(self, ctx: Context) -> None:
         await ctx.reply(
-            strip_doc(
+            strip(
                 f"""
             __**Bot Info**__
             **Python Version:** v{python_version()}
-            **Uptime:** `{TimeDelta(seconds=int(current_time() - self.bot.ready_timestamp))}`
+            **Uptime:** `{TimeDelta(seconds=int(get_time() - self.bot.ready_timestamp))}`
             """
             )
         )
@@ -155,7 +156,7 @@ class Miscellaneous(
             " isn't specified, it uses the current channel."
         ),
     )
-    @has_permissions(manage_messages=True)  # needs to be able to delete messages to run the command
+    @commands.has_permissions(manage_messages=True)  # needs to be able to delete messages to run the command
     async def snipe(self, ctx: Context, channel: TextChannel | None = None) -> None:
         if channel is None:
             channel = ctx.channel
@@ -185,7 +186,7 @@ class Miscellaneous(
 
             embed.add_field(
                 name=str(i) + ("" if i else " (latest)"),
-                value=strip_doc(
+                value=strip(
                     f"""
                     Author: {message.author.mention} (ID: {message.author.id}, Plain: {escape_markdown(str(message.author))})
                     Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
@@ -205,7 +206,7 @@ class Miscellaneous(
         if not message.guild:
             return
 
-        self.sniped[message.channel.id].appendleft((message, int(current_time())))
+        self.sniped[message.channel.id].appendleft((message, int(get_time())))
 
         while len(self.sniped[message.channel.id]) > 5:
             self.sniped[message.channel.id].pop()

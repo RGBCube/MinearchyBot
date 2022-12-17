@@ -1,23 +1,29 @@
 from __future__ import annotations
 
-from json import load as parse_json
+import json
 from os import environ as env
 from pathlib import Path
 
-from uvloop import install as install_uvloop
+import uvloop
 
 from . import MinearchyBot
 
 
 def main() -> None:
-    install_uvloop()
+    uvloop.install()
 
-    with (Path(__file__).parent / "config.json").open() as f:
-        config = parse_json(f)
+    config = json.loads(
+        (
+                Path(__file__).parent / "config.json"
+        ).read_text()
+    )
 
-    for key in ("HIDE", "NO_UNDERSCORE"):
-        env[f"JISHAKU_{key}"] = "True"
+    env[f"JISHAKU_HIDE"] = "True"
+    env[f"JISHAKU_NO_UNDERSCORE"] = "True"
 
-    bot = MinearchyBot(token=config["BOT_TOKEN"], webhook_url=config["WEBHOOK_URL"])
+    bot = MinearchyBot(
+        token=config["BOT_TOKEN"],
+        webhook_url=config["WEBHOOK_URL"]
+    )
 
     bot.run()

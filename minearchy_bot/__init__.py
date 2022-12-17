@@ -2,12 +2,12 @@ from __future__ import annotations
 
 __all__ = ("MinearchyBot",)
 
-from asyncio import run as run_coro
-from inspect import cleandoc as strip_doc
-from itertools import chain as chain_iter
+import asyncio
+from inspect import cleandoc as strip
+from itertools import chain
 from pathlib import Path
-from time import time as current_time
-from traceback import format_exc as format_exit
+from time import time as get_time
+from traceback import format_exc as format_exception
 
 from aiohttp import ClientSession as AIOHTTPSession
 from discord import AllowedMentions, Game, Intents, Webhook
@@ -58,7 +58,7 @@ class MinearchyBot(CommandsBot):
     @override
     async def on_ready(self) -> None:
         print(
-            strip_doc(
+            strip(
                 f"""
                 Connected to Discord!
                 User: {self.user}
@@ -67,12 +67,12 @@ class MinearchyBot(CommandsBot):
             )
         )
 
-        self.ready_timestamp = current_time()
+        self.ready_timestamp = get_time()
         await self.log_webhook.send("Bot is now online!")
 
     async def load_extensions(self) -> None:
         cogs = Path(__file__).parent / "cogs"
-        for file_name in chain_iter(
+        for file_name in chain(
             map(
                 lambda file_path: ".".join(file_path.relative_to(cogs.parent.parent).parts)[:-3],
                 cogs.rglob("*.py"),
@@ -83,7 +83,7 @@ class MinearchyBot(CommandsBot):
                 await self.load_extension(file_name)
                 print(f"Loaded {file_name}")
             except (ExtensionFailed, NoEntryPointError):
-                print(f"Couldn't load {file_name}:\n{format_exit()}")
+                print(f"Couldn't load {file_name}:\n{format_exception()}")
 
     @override
     def run(self) -> None:
@@ -96,6 +96,6 @@ class MinearchyBot(CommandsBot):
                 await self.start(self.token, reconnect=True)
 
         try:
-            run_coro(runner())
+            asyncio.run(runner())
         except KeyboardInterrupt:
             pass

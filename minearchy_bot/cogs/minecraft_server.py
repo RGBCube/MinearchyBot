@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from discord.ext.commands import Cog, command, group
+from discord.ext import commands
+from discord.ext.commands import Cog, command
 from discord.ui import Button, View
 
 if TYPE_CHECKING:
@@ -19,7 +20,7 @@ class MinecraftServer(
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
 
-    @group(
+    @commands.group(
         invoke_without_command=True,
         brief="Sends the server IP.",
         help="Sends the server IP.",

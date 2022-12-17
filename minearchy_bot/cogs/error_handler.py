@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from asyncio import gather as await_parallel
+import asyncio
 from contextlib import suppress as suppress_error
-from traceback import format_exception as format_exit
+from traceback import format_exception
 from typing import TYPE_CHECKING
 
 from discord import HTTPException
@@ -61,10 +61,10 @@ class ErrorHandler(Cog):
             await ctx.reply("Invalid channel.")
 
         else:
-            trace = "".join(format_exit(type(error), error, error.__traceback__))
+            trace = "".join(format_exception(type(error), error, error.__traceback__))
             print(f"Ignoring exception in command {ctx.command}:\n{trace}")
 
-            await await_parallel(
+            await asyncio.gather(
                 self.bot.log_webhook.send(f"<@512640455834337290>```{trace}```"),
                 ctx.reply(
                     "An error occurred while executing the command. The error has been reported."
