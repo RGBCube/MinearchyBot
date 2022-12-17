@@ -83,7 +83,7 @@ class Utils(Cog):
                             deny.append(perm)
 
                     if allow or deny:
-                        perms.append(f"    {typ} {name}: {thing.id}") 
+                        perms.append(f"    {typ} `{name}`: {thing.id if name != '@everyone' else ''}") 
                         perms.append("      permissions:")
 
                         for a in allow:
@@ -143,13 +143,13 @@ class Utils(Cog):
                                 deny.append(perm)
 
                         if allow or deny:
-                            child_perms.append(f"        {typ} {name}: {child_thing.id}")
-                            string.append("          permissions:")
+                            child_perms.append(f"        {typ} `{name}`: {child_thing.id}")
+                            child_perms.append("          permissions:")
 
                             for a in allow:
-                                string.append(f"            {a}: ✅")
+                                child_perms.append(f"            {a}: ✅")
                             for d in deny:
-                                string.append(f"            {d}: ❌")
+                                child_perms.append(f"            {d}: ❌")
 
                     if child_perms:
                         string.append("      permissions:")
@@ -195,7 +195,7 @@ class Utils(Cog):
                             deny.append(perm)
 
                     if allow or deny:
-                        string.append(f"    {typ} {name}: {thing.id}")
+                        string.append(f"    {typ} `{name}`: {thing.id if name != '@everyone' else ''}")
                         string.append("      permissions:")
 
                         for a in allow:
@@ -206,7 +206,7 @@ class Utils(Cog):
                 if perms:
                     string.append("  permissions:")
                     string.extend(perms)
-                    
+
                 # Root perms end.
 
         await ctx.reply(
