@@ -66,6 +66,24 @@ class Miscellaneous(
         await ctx.reply(f"There are `{ctx.guild.member_count}` users in this server.")
 
     @Cog.listener()
+    async def on_message(self, message: Message) -> None:
+        name = message.author.display_name
+
+        if not name.startswith("[AFK]"):
+            return
+
+        await message.author.edit(nick=name.removeprefix("[AFK]"))
+        await message.channel.send(f"Welcome back {escape_markdown(message.author.mention)}! I've unset your AFK status.")
+
+    @command(
+        brief="Sets you as AFK.",
+        help="Sets you as AFK.",
+    )
+    async def afk(self, ctx: Context) -> None:
+        await ctx.author.edit(nick=f"[AFK] {ctx.author.display_name}")
+        await ctx.reply("Set your status to AFK. You can now touch grass freely 🌲.")
+
+    @Cog.listener()
     async def on_message_delete(self, message: Message) -> None:
         if not message.guild:
             return
