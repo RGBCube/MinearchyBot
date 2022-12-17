@@ -8,7 +8,7 @@ from platform import python_version
 from time import monotonic as ping_time, time as current_time
 from typing import TYPE_CHECKING
 
-from discord import Color, Embed, File, TextChannel
+from discord import CategoryChannel, Color, Embed, File, TextChannel
 from discord.ext.commands import Cog, command, has_permissions
 from discord.utils import escape_markdown
 
@@ -80,23 +80,24 @@ class Miscellaneous(
         string = []
 
         for channel in ctx.guild.channels:
-            indent = "    " if getattr(channel, "category", False) else ""
+            ind = "    "
+            ind_nr = 1 if getattr(channel, "category", False) else 0
 
-            string.append(indent + f"{str(type(channel)).lower()} {channel.name}:")
+            string.append(ind*ind_nr + f"{'category' if isinstance(channel, CategoryChannel) else 'channel'} {channel.name}:")
 
             if channel.permissions_synced:
-                string.append(indent*2 + "permissions: synced")
+                string.append(ind*(ind_nr+1) + "permissions: synced")
             else:
-                string.append(indent*2 + "permissions:")
+                string.append(ind*(ind_nr+1) + "permissions:")
 
                 if not channel.category:
                     for thing, overwrites in channel.overwrites.items():
                         allows, denies = overwrites.pair()
 
                         for allow in allows:
-                            string.append(indent*3 + f"✅ {allow[0]}")
+                            string.append(ind*(ind_nr+2) + f"{allow[0]}: ✅")
                         for deny in denies:
-                            string.append(indent*3 + f"❌ {deny[0]}")
+                            string.append(ind*(ind_nr+2) + f"{deny[0]}: ❌")
 
                 else:
                     for thing, overwrites in channel.overwrites.items():
@@ -107,11 +108,11 @@ class Miscellaneous(
 
                         for allow in allows:
                             if allow not in parent_allows:
-                                string.append(indent*3 + f"✅ {allow[0]}")
+                                string.append(ind*(ind_nr+2) + f"{allow[0]}: ✅")
 
                         for deny in denies:
                             if deny not in parent_denies:
-                                string.append(indent*3 + f"❌ {deny[0]}")
+                                string.append(ind*(ind_nr+2) + f"{deny[0]}: ❌")
 
         await ctx.reply(
             file=File(
