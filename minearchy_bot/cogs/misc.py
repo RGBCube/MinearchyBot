@@ -3,11 +3,12 @@ from __future__ import annotations
 from collections import defaultdict as DefaultDict, deque as Deque
 from datetime import timedelta as TimeDelta
 from inspect import cleandoc as strip_doc
+from io import BytesIO
 from platform import python_version
 from time import monotonic as ping_time, time as current_time
 from typing import TYPE_CHECKING
 
-from discord import Color, Embed, TextChannel
+from discord import CategoryChannel, Color, Embed, TextChannel, File
 from discord.ext.commands import Cog, command, has_permissions
 from discord.utils import escape_markdown
 
@@ -62,6 +63,59 @@ class Miscellaneous(
             **Python Version:** v{python_version()}
             **Uptime:** `{TimeDelta(seconds=int(current_time() - self.bot.ready_timestamp))}`
             """
+            )
+        )
+
+    @command(hidden=True)
+    async def channel_perm_tree(self, ctx: Context) -> None:
+        def overwrites_list(overwrites: list) -> list[str]:
+            text: list[str] = []
+
+            for thing, overwrite in overwrites:
+                text.append(f"({type(thing)}) {thing.name}:")
+
+                allows, denies = overwrite.pair()
+
+                for allow in allows:
+                    text.append(f"    ✅ {allow[0]}")
+                for deny in denies:
+                    text.append(f"    ❌ {deny[0]}")
+
+            return text
+
+        text: list[str] = []
+
+        for channel in ctx.guild.channels:
+            if channel is CategoryChannel:
+                text.append(f"Category: {channel.name}")
+
+            # not a category and root level
+            elif channel.category is None:
+                text.append(f"Channel: {channel.name}")
+
+            # has a parent
+            else:
+                text.append(f"    Channel: {channel.name}")
+
+            if (parent := getattr(channel, "category")) is None:
+                text.extend(["    " + o for o in overwrites_list(channel.overwrites.items())])
+            else:
+                text.extend(
+                    [
+                        "        " + o
+                        for o in
+                        overwrites_list(
+                            channel.overwrites.items() - parent.overwrites.items()
+                        )
+                    ]
+                )
+
+        await ctx.reply(
+            file=File(
+                BytesIO(
+                    bytes("\n".join(text), "utf-8")
+                ),
+                "perms.txt"
             )
         )
 
