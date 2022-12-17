@@ -8,7 +8,7 @@ from platform import python_version
 from time import monotonic as ping_time, time as current_time
 from typing import TYPE_CHECKING
 
-from discord import CategoryChannel, Color, Embed, File, TextChannel
+from discord import Color, Embed, File, TextChannel
 from discord.ext.commands import Cog, command, has_permissions
 from discord.utils import escape_markdown
 
@@ -89,7 +89,7 @@ class Miscellaneous(
             else:
                 string.append(indent*2 + "permissions:")
 
-                if isinstance(channel, CategoryChannel):
+                if not channel.category:
                     for thing, overwrites in channel.overwrites.items():
                         allows, denies = overwrites.pair()
 
