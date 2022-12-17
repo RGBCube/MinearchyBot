@@ -67,7 +67,7 @@ class Miscellaneous(
 
     @Cog.listener()
     async def on_message(self, message: Message) -> None:
-        if not message.author.display_name.lower().startswith("[AFK]"):
+        if not message.author.display_name.upper().startswith("[AFK]"):
             return
 
         await message.author.edit(nick=message.author.display_name[5:])
