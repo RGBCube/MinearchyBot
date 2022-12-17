@@ -8,14 +8,14 @@ from platform import python_version
 from time import monotonic as ping_time, time as current_time
 from typing import TYPE_CHECKING
 
-from discord import CategoryChannel, Color, Embed, File
+from discord import CategoryChannel, Color, Embed, File, TextChannel
 from discord.ext.commands import Cog, command, has_permissions
 from discord.utils import escape_markdown
 
 from ..utils import override
 
 if TYPE_CHECKING:
-    from discord import Message, TextChannel
+    from discord import Message
     from discord.ext.commands import Context
 
     from .. import MinearchyBot
