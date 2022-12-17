@@ -67,7 +67,7 @@ class Utils(Cog):
                         typ = "member"
                         name = f"{thing.name}#{thing.discriminator}"
                     else:
-                        typ = repr(thing.type)
+                        typ = "unknown"
                         name = "unknown"
 
                     string.append(f"    {typ} {name}:")
@@ -165,7 +165,7 @@ class Utils(Cog):
                         typ = "member"
                         name = f"{thing.name}#{thing.discriminator}"
                     else:
-                        typ = repr(thing.type)
+                        typ = "unknown"
                         name = "unknown"
 
                     string.append(f"    {typ} {name}:")
