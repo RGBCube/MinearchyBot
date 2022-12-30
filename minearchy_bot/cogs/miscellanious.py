@@ -32,6 +32,14 @@ class Miscellaneous(
         self.bot.help_command.hidden = True
 
     @command(
+        brief="Sends the GitHub repository link for the bot.",
+        help="Sends the GitHub repository link for the bot.",
+    )
+    async def github(self, ctx: Context) -> None:
+        # Not a button since I want the embed.
+        await ctx.reply("https://github.com/RGBCube/minearchy-bot")
+
+    @command(
         brief="Sends info about the bot.",
         help="Sends info about the bot."
     )
