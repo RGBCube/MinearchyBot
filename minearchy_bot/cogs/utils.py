@@ -43,6 +43,7 @@ class Utils(Cog):
         ts = get_monotonic() - ts
         await message.edit(content=f"Pong! `{int(ts * 1000)}ms`")
 
+    # Fuck this thing I'm never touching it again.
     @command(
         name="channel-perm-tree",
         hidden=True
