@@ -62,7 +62,8 @@ class MinecraftServer(
         if (online := status.players.online) == 0:
             message = "The Minecraft server has nobody online :(."
         else:
-            message = f"The Minecraft server has {online} players online."
+            player_list = '\n'.join(f"- {player.name}" for player in status.players.sample)
+            message = f"The Minecraft server has {online} players online:\n{player_list}"
 
         await ctx.reply(message)
 
