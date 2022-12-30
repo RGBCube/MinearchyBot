@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 class Miscellaneous(
     Cog,
     name="Miscellaneous",
-    description="Various utilities.",
+    description="Miscellaneous commands.",
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot

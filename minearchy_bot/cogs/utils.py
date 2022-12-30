@@ -22,7 +22,11 @@ if TYPE_CHECKING:
     from .. import MinearchyBot
 
 
-class Utils(Cog):
+class Utils(
+    Cog,
+    name="Utilities",
+    description="Various utilities.",
+):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
 

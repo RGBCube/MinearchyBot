@@ -18,7 +18,11 @@ if TYPE_CHECKING:
     from .. import MinearchyBot
 
 
-class Moderation(Cog):
+class Moderation(
+    Cog,
+    name="Moderation",
+    description="Moderation commands & utilities.",
+):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
         self.time_values = {
