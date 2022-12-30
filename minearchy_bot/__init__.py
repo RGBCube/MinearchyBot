@@ -31,15 +31,15 @@ class MinearchyBot(CommandsBot):
         self.webhook_url = webhook_url
 
         self.server = GeyserServer(
-            java_ip="play.landsofminearchy.com",
-            bedrock_ip="bedrock.landsofminearchy.com",
+            java_ip="play.minearchy.com",
+            bedrock_ip="bedrock.minearchy.com",
         )
 
         super().__init__(
             command_prefix=when_mentioned_or("="),
             strip_after_prefix=True,
             case_insensitive=True,
-            status=Game("on play.landsofminearchy.com"),
+            status=Game("on play.minearchy.com"),
             owner_ids={512640455834337290, 160087716757897216},
             allowed_mentions=AllowedMentions.none(),
             max_messages=100,

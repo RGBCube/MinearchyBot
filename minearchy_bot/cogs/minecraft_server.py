@@ -76,7 +76,7 @@ class MinecraftServer(
         view.add_item(
             Button(
                 label="Go to the wiki!",
-                url="https://landsofminearchy.com/wiki",
+                url="https://minearchy.com/wiki",
             )
         )
         await ctx.reply(view=view)
@@ -90,7 +90,7 @@ class MinecraftServer(
         view.add_item(
             Button(
                 label="Go to the store!",
-                url="https://landsofminearchy.com/store",
+                url="https://minearchy.com/store",
             )
         )
         await ctx.reply(view=view)
@@ -105,7 +105,7 @@ class MinecraftServer(
         view.add_item(
             Button(
                 label="Go to the forum!",
-                url="https://landsofminearchy.com/forum",
+                url="https://minearchy.com/forum",
             )
         )
         await ctx.reply(view=view)
@@ -120,7 +120,7 @@ class MinecraftServer(
         view.add_item(
             Button(
                 label="Go to the dynmap!",
-                url="https://landsofminearchy.com/dynmap",
+                url="https://minearchy.com/dynmap",
             )
         )
         await ctx.reply(
@@ -136,7 +136,7 @@ class MinecraftServer(
         view.add_item(
             Button(
                 label="Vote for the Minecraft server!",
-                url="https://landsofminearchy.com/vote",
+                url="https://minearchy.com/vote",
             )
         )
         await ctx.reply(view=view)
