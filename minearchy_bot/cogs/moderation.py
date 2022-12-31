@@ -6,13 +6,13 @@ from inspect import cleandoc as strip
 from time import time as get_time
 from typing import TYPE_CHECKING
 
-from discord import Color, Embed, TextChannel
+from discord import Color, Embed, Member, TextChannel
 from discord.ext import commands
 from discord.ext.commands import Cog, command
 from discord.utils import escape_markdown
 
 if TYPE_CHECKING:
-    from discord import Member, Message
+    from discord import Message
     from discord.ext.commands import Context
 
     from .. import MinearchyBot
