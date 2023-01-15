@@ -24,33 +24,33 @@ if TYPE_CHECKING:
 
 class Utils(
     Cog,
-    name="Utilities",
-    description="Various utilities.",
+    name = "Utilities",
+    description = "Various utilities.",
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
 
     @command(
-        brief="Sends the total members in the server.",
-        help="Sends the total members in the server.",
+        brief = "Sends the total members in the server.",
+        help = "Sends the total members in the server.",
     )
     async def members(self, ctx: Context) -> None:
         await ctx.reply(f"There are `{ctx.guild.member_count}` users in this server.")
 
     @command(
-        brief="Sends the bots ping.",
-        help="Sends the bots ping."
+        brief = "Sends the bots ping.",
+        help = "Sends the bots ping."
     )
     async def ping(self, ctx: Context) -> None:
         ts = get_monotonic()
         message = await ctx.reply("Pong!")
         ts = get_monotonic() - ts
-        await message.edit(content=f"Pong! `{int(ts * 1000)}ms`")
+        await message.edit(content = f"Pong! `{int(ts * 1000)}ms`")
 
     # Fuck this thing I'm never touching it again.
     @command(
-        name="channel-perm-tree",
-        hidden=True
+        name = "channel-perm-tree",
+        hidden = True
     )
     async def channel_perm_tree(self, ctx: Context) -> None:
         string = []
@@ -88,18 +88,20 @@ class Utils(
                             deny.append(perm)
 
                     if allow or deny:
-                        perms.append(f"    {typ} `{name}`: {thing.id if name != '@everyone' else ''}") 
+                        perms.append(
+                            f"    {typ} `{name}`: {thing.id if name != '@everyone' else ''}"
+                        )
                         perms.append("      permissions:")
 
                         for a in allow:
                             perms.append(f"        {a}: ✅")
                         for d in deny:
                             perms.append(f"        {d}: ❌")
-                
+
                 if perms:
                     string.append("  permissions:")
                     string.extend(perms)
-                
+
                 # Category perms end.
 
                 # Channel perms start.
@@ -200,7 +202,9 @@ class Utils(
                             deny.append(perm)
 
                     if allow or deny:
-                        string.append(f"    {typ} `{name}`: {thing.id if name != '@everyone' else ''}")
+                        string.append(
+                            f"    {typ} `{name}`: {thing.id if name != '@everyone' else ''}"
+                        )
                         string.append("      permissions:")
 
                         for a in allow:
@@ -215,9 +219,9 @@ class Utils(
                 # Root perms end.
 
         await ctx.reply(
-            file=File(
+            file = File(
                 BytesIO("\n".join(string).encode()),
-                filename="channel-perm-tree.txt"
+                filename = "channel-perm-tree.txt"
             )
         )
 

@@ -19,8 +19,8 @@ if TYPE_CHECKING:
 
 class Miscellaneous(
     Cog,
-    name="Miscellaneous",
-    description="Miscellaneous commands.",
+    name = "Miscellaneous",
+    description = "Miscellaneous commands.",
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
@@ -32,16 +32,16 @@ class Miscellaneous(
         self.bot.help_command.hidden = True
 
     @command(
-        brief="Sends the GitHub repository link for the bot.",
-        help="Sends the GitHub repository link for the bot.",
+        brief = "Sends the GitHub repository link for the bot.",
+        help = "Sends the GitHub repository link for the bot.",
     )
     async def github(self, ctx: Context) -> None:
         # Not a button since I want the embed.
         await ctx.reply("https://github.com/RGBCube/minearchy-bot")
 
     @command(
-        brief="Sends info about the bot.",
-        help="Sends info about the bot."
+        brief = "Sends info about the bot.",
+        help = "Sends info about the bot."
     )
     async def info(self, ctx: Context) -> None:
         await ctx.reply(
@@ -49,14 +49,14 @@ class Miscellaneous(
                 f"""
             __**Bot Info**__
             **Python Version:** v{python_version()}
-            **Uptime:** `{TimeDelta(seconds=int(get_time() - self.bot.ready_timestamp))}`
+            **Uptime:** `{TimeDelta(seconds = int(get_time() - self.bot.ready_timestamp))}`
             """
             )
         )
 
     @command(
-        brief="Sets you as AFK.",
-        help="Sets you as AFK.",
+        brief = "Sets you as AFK.",
+        help = "Sets you as AFK.",
     )
     async def afk(self, ctx: Context) -> None:
         # No error because it will un-afk the caller.
@@ -70,7 +70,7 @@ class Miscellaneous(
             )
             return
 
-        await ctx.author.edit(nick=f"[AFK] {ctx.author.display_name}"[:32])
+        await ctx.author.edit(nick = f"[AFK] {ctx.author.display_name}"[:32])
         await ctx.reply("Set your status to AFK. You can now touch grass freely 🌲.")
 
     @Cog.listener()
@@ -78,8 +78,10 @@ class Miscellaneous(
         if not message.author.display_name.upper().startswith("[AFK]"):
             return
 
-        await message.author.edit(nick=message.author.display_name[5:])
-        await message.channel.send(f"Welcome back {message.author.mention}! I've unset your AFK status.")
+        await message.author.edit(nick = message.author.display_name[5:])
+        await message.channel.send(
+            f"Welcome back {message.author.mention}! I've unset your AFK status."
+        )
 
 
 async def setup(bot: MinearchyBot) -> None:

@@ -20,8 +20,8 @@ if TYPE_CHECKING:
 
 class Moderation(
     Cog,
-    name="Moderation",
-    description="Moderation commands & utilities.",
+    name = "Moderation",
+    description = "Moderation commands & utilities.",
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
@@ -34,11 +34,11 @@ class Moderation(
         self.sniped = DefaultDict(Deque)
 
     @command(
-        aliases=("mute",),
-        brief="Times out a user.",
-        help="Times out a user."
+        aliases = ("mute",),
+        brief = "Times out a user.",
+        help = "Times out a user."
     )
-    @commands.has_permissions(manage_messages=True)
+    @commands.has_permissions(manage_messages = True)
     async def timeout(self, ctx: Context, member: Member, duration: str = "1d") -> None:
         if duration[-1] not in self.time_values or len(duration) < 2:
             await ctx.reply("Invalid duration. Valid durations are: d, h, m, s.")
@@ -55,20 +55,21 @@ class Moderation(
 
         # This is so cursed but works.
         await member.timeout(
-            TimeDelta(**{clean_time_name: time}), reason=f"Timed out by moderator {ctx.author}"
+            TimeDelta(**{ clean_time_name: time }), reason = f"Timed out by moderator {ctx.author}"
         )
 
         await ctx.reply(f"Timed out {member.mention} for {time} {clean_time_name}.")
 
+    # noinspection GrazieInspection
     @command(
-        brief="Sends the latest deleted messages.",
-        help=(
+        brief = "Sends the latest deleted messages.",
+        help = (
             "Sends the last 5 deleted messages in a specified channel.\nIf the channel"
             " isn't specified, it uses the current channel."
         ),
     )
     # Needs to be able to delete messages to run the command.
-    @commands.has_permissions(manage_messages=True)
+    @commands.has_permissions(manage_messages = True)
     async def snipe(self, ctx: Context, channel: TextChannel | None = None) -> None:
         if channel is None:
             channel = ctx.channel
@@ -83,12 +84,12 @@ class Moderation(
             return
 
         embed = Embed(
-            title=(
+            title = (
                 "Showing last 5 deleted messages for"
                 f" {'the current channel' if ctx.channel.id == channel.id else channel}"
             ),
-            description="The lower the number is, the more recent it got deleted.",
-            color=Color.random(),
+            description = "The lower the number is, the more recent it got deleted.",
+            color = Color.random(),
         )
 
         zwsp = "\uFEFF"
@@ -97,8 +98,8 @@ class Moderation(
             message, ts = log
 
             embed.add_field(
-                name=str(i) + ("" if i else " (latest)"),
-                value=strip(
+                name = str(i) + ("" if i else " (latest)"),
+                value = strip(
                     f"""
                     Author: {message.author.mention} (ID: {message.author.id}, Plain: {escape_markdown(str(message.author))})
                     Deleted at: <t:{ts}:F> (Relative: <t:{ts}:R>)
@@ -108,10 +109,10 @@ class Moderation(
                     ```
                     """
                 ),
-                inline=False,
+                inline = False,
             )
 
-        await ctx.reply(embed=embed)
+        await ctx.reply(embed = embed)
 
     @Cog.listener()
     async def on_message_delete(self, message: Message) -> None:

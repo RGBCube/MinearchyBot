@@ -14,7 +14,7 @@ def main() -> None:
 
     config = json.loads(
         (
-                Path(__file__).parent / "config.json"
+            Path(__file__).parent / "config.json"
         ).read_text()
     )
 
@@ -22,8 +22,8 @@ def main() -> None:
     env[f"JISHAKU_NO_UNDERSCORE"] = "True"
 
     bot = MinearchyBot(
-        token=config["BOT_TOKEN"],
-        webhook_url=config["WEBHOOK_URL"]
+        token = config["BOT_TOKEN"],
+        webhook_url = config["WEBHOOK_URL"]
     )
 
     bot.run()

@@ -31,27 +31,27 @@ class MinearchyBot(CommandsBot):
         self.webhook_url = webhook_url
 
         self.server = GeyserServer(
-            java_ip="play.minearchy.com",
-            bedrock_ip="bedrock.minearchy.com",
+            java_ip = "play.minearchy.com",
+            bedrock_ip = "bedrock.minearchy.com",
         )
 
         super().__init__(
-            command_prefix=when_mentioned_or("="),
-            strip_after_prefix=True,
-            case_insensitive=True,
-            status=Game("on play.minearchy.com"),
-            owner_ids={512640455834337290, 160087716757897216},
-            allowed_mentions=AllowedMentions.none(),
-            max_messages=100,
-            intents=Intents(
-                guilds=True,
-                members=True,
-                messages=True,
-                message_content=True,
+            command_prefix = when_mentioned_or("="),
+            strip_after_prefix = True,
+            case_insensitive = True,
+            status = Game("on play.minearchy.com"),
+            owner_ids = { 512640455834337290, 160087716757897216 },
+            allowed_mentions = AllowedMentions.none(),
+            max_messages = 100,
+            intents = Intents(
+                guilds = True,
+                members = True,
+                messages = True,
+                message_content = True,
             ),
-            help_attrs=dict(
-                brief="Sends help.",
-                help="Sends all the commands of the bot, or help of a specific command or module.",
+            help_attrs = dict(
+                brief = "Sends help.",
+                help = "Sends all the commands of the bot, or help of a specific command or module.",
             ),
         )
 
@@ -90,10 +90,10 @@ class MinearchyBot(CommandsBot):
         async def runner() -> None:
             async with self, AIOHTTPSession() as self.session:
                 self.log_webhook = Webhook.from_url(
-                    self.webhook_url, session=self.session, bot_token=self.token
+                    self.webhook_url, session = self.session, bot_token = self.token
                 )
                 await self.load_extensions()
-                await self.start(self.token, reconnect=True)
+                await self.start(self.token)
 
         try:
             asyncio.run(runner())

@@ -2,11 +2,11 @@
 name = "minearchy-bot"
 version = "1.0.0"
 description = "A simple Discord bot for the Lands of Minearchy Discord server."
-authors = [ "RGBCube", "The Lands of Minearchy team" ]
+authors = ["RGBCube", "The Lands of Minearchy team"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-"discord.py" = { version = "*", extras = [ "speed" ] }
+"discord.py" = { version = "*", extras = ["speed"] }
 jishaku = "*"
 mcstatus = "*"
 uvloop = "*"
