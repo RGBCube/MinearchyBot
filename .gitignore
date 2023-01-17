@@ -1,6 +1,7 @@
 *
 venv/
 
+!.gitignore
 !*.py
 !*.example.json
 !*.sh
