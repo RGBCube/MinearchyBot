@@ -19,7 +19,6 @@ from discord.ext.commands import (
 )
 
 from .minecraft_server import GeyserServer
-from .utils import override
 
 
 class MinearchyBot(CommandsBot):
@@ -55,7 +54,6 @@ class MinearchyBot(CommandsBot):
             ),
         )
 
-    @override
     async def on_ready(self) -> None:
         print(
             strip(
@@ -85,7 +83,6 @@ class MinearchyBot(CommandsBot):
             except (ExtensionFailed, NoEntryPointError):
                 print(f"Couldn't load {file_name}:\n{format_exception()}")
 
-    @override
     def run(self) -> None:
         async def runner() -> None:
             async with self, AIOHTTPSession() as self.session:

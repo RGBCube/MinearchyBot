@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING
 
 from discord.ext.commands import Cog, command
 
-from ..utils import override
 
 if TYPE_CHECKING:
     from discord import Message
@@ -26,7 +25,6 @@ class Miscellaneous(
         self.bot = bot
         self.bot.help_command.cog = self
 
-    @override
     def cog_unload(self) -> None:
         self.bot.help_command.cog = None
         self.bot.help_command.hidden = True
