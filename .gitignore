@@ -3,9 +3,6 @@ venv/
 
 !.gitignore
 
-!.github/workflows/
-!.github/workflows/scripts/
-
 !minearchy_bot/
 !minearchy_bot/cogs/
 !minearchy_bot/minecraft_server/
