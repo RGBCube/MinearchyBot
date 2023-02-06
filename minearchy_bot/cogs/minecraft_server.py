@@ -53,6 +53,33 @@ class MinecraftServer(
         )
 
     @command(
+        aliases = ("servers",),
+        brief = "Sends info about a specific server.",
+        help = "Sends info about a specific server.",
+    )
+    async def server(self, ctx: Context, server: str | None = None) -> None:
+        servers = {
+            "smp": "The SMP is a server where people can play survival Minecraft alongside other members of the community, with a multitude of features such as shops, auctions and more.",
+            "kitpvp": "The KitPvP server is a server where players can fight each other with preset items called kits. These kits can be used in prebuilt arenas. The aim of KitPvp is too defeat your opponent in combat, with whatever kit you chose.",
+        }
+
+        if server is None:
+            await ctx.reply(
+                f"You must specify a server. The available servers are: {', '.join(f'`{s}`' for s in servers)}."
+            )
+            return
+
+        server = server.lower()
+        if server not in servers:
+            await ctx.reply(
+                f"Invalid server. The available servers are: {', '.join(f'`{s}`' for s in servers)}."
+            )
+            return
+
+        await ctx.reply("```\n" + servers[server] + "\n```")
+
+    @command(
+        aliases = ("players", "playerlist"),
         brief = "Shows information about the Minecraft server.",
         help = "Shows the total player count, the Minecraft server IP and the server latency.",
     )

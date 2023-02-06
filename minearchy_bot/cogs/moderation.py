@@ -25,12 +25,6 @@ class Moderation(
 ):
     def __init__(self, bot: MinearchyBot) -> None:
         self.bot = bot
-        self.time_values = {
-            "d": "days",
-            "h": "hours",
-            "m": "minutes",
-            "s": "seconds",
-        }
         self.sniped = DefaultDict(Deque)
 
     @command(
@@ -40,6 +34,13 @@ class Moderation(
     )
     @commands.has_permissions(manage_messages = True)
     async def timeout(self, ctx: Context, member: Member, duration: str = "1d") -> None:
+        time_values = {
+            "d": "days",
+            "h": "hours",
+            "m": "minutes",
+            "s": "seconds",
+        }
+
         if duration[-1] not in self.time_values or len(duration) < 2:
             await ctx.reply("Invalid duration. Valid durations are: d, h, m, s.")
             return
