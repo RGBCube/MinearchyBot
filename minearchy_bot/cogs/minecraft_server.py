@@ -76,7 +76,7 @@ class MinecraftServer(
             )
             return
 
-        await ctx.reply("```\n" + servers[server] + "\n```")
+        await ctx.reply(servers[server])
 
     @command(
         aliases = ("players", "playerlist"),
