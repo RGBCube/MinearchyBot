@@ -35,7 +35,7 @@ class Miscellaneous(
     )
     async def github(self, ctx: Context) -> None:
         # Not a button since I want the embed.
-        await ctx.reply("https://github.com/RGBCube/minearchy-bot")
+        await ctx.reply("https://github.com/RGBCube/MinearchyBot")
 
     @command(
         brief = "Sends info about the bot.",

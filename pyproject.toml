@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "minearchy-bot"
+name = "MinearchyBot"
 version = "1.0.0"
 description = "A simple Discord bot for the Lands of Minearchy Discord server."
 authors = ["RGBCube", "The Lands of Minearchy team"]
