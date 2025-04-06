@@ -2,7 +2,6 @@ from __future__ import annotations
 
 __all__ = ("MinearchyBot",)
 
-import asyncio
 from inspect import cleandoc as strip
 from itertools import chain
 from pathlib import Path
@@ -83,16 +82,10 @@ class MinearchyBot(CommandsBot):
             except (ExtensionFailed, NoEntryPointError):
                 print(f"Couldn't load {file_name}:\n{format_exception()}")
 
-    def run(self) -> None:
-        async def runner() -> None:
-            async with self, AIOHTTPSession() as self.session:
-                self.log_webhook = Webhook.from_url(
-                    self.webhook_url, session = self.session, bot_token = self.token
-                )
-                await self.load_extensions()
-                await self.start(self.token)
-
-        try:
-            asyncio.run(runner())
-        except KeyboardInterrupt:
-            pass
+    async def run(self) -> None:
+        async with self, AIOHTTPSession() as self.session:
+            self.log_webhook = Webhook.from_url(
+                self.webhook_url, session = self.session, bot_token = self.token
+            )
+            await self.load_extensions()
+            await self.start(self.token)

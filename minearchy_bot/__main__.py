@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from os import environ as env
 from pathlib import Path
@@ -7,7 +8,7 @@ from pathlib import Path
 from . import MinearchyBot
 
 
-def main() -> None:
+async def main() -> None:
     config = json.loads(
         (
             Path(__file__).parent / "config.json"
@@ -22,7 +23,10 @@ def main() -> None:
         webhook_url = config["WEBHOOK_URL"]
     )
 
-    bot.run()
+    await bot.run()
 
 if __name__ == "__main__":
-    main()
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
