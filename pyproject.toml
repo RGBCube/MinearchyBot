@@ -1,15 +1,11 @@
-[tool.poetry]
-name = "minearchy_bot"
-version = "1.0.0"
-description = "A simple Discord bot for the Lands of Minearchy Discord server."
-authors = ["RGBCube", "The Lands of Minearchy team"]
+[project]
+name            = "minearchy_bot"
+description     = "A simple Discord bot for the Lands of Minearchy Discord server."
+version         = "0.0.1"
+requires-python = ">=3.10"
+authors         = [ { name = "RGBCube", email = "git@rgbcu.be" } ]
+urls.repository = "https://github.com/RGBCube/minearchy-bot"
+readme          = "README.md"
+license         = "GPL-3.0-or-later"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-"discord.py" = { version = "*", extras = ["speed"] }
-jishaku = "*"
-mcstatus = "*"
-uvloop = "*"
-
-[tool.poetry.scripts]
-bot = "minearchy_bot.__main__:main"
+dependencies = [ "discord-py>=2.5.2", "jishaku>=2.6.0", "mcstatus>=11.1.1" ]

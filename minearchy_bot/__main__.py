@@ -4,14 +4,10 @@ import json
 from os import environ as env
 from pathlib import Path
 
-import uvloop
-
 from . import MinearchyBot
 
 
 def main() -> None:
-    uvloop.install()
-
     config = json.loads(
         (
             Path(__file__).parent / "config.json"
@@ -27,3 +23,6 @@ def main() -> None:
     )
 
     bot.run()
+
+if __name__ == "__main__":
+    main()

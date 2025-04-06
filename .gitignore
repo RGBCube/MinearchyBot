@@ -1,17 +1,13 @@
 *
-venv/
 
 !.gitignore
 
 !minearchy_bot/
-!minearchy_bot/cogs/
-!minearchy_bot/minecraft_server/
-!minearchy_bot/utils/
+!minearchy_bot/**/
 
 !*.py
 !*.example.json
 !*.sh
 !*.md
-!*.yml
 !*.toml
 !*.lock
