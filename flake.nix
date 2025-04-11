@@ -7,7 +7,9 @@
   };
 
   outputs = { systems, nixpkgs, ... }: let
-    eachSystem = nixpkgs.lib.genAttrs (import systems);
+      inherit (nixpkgs) lib;
+
+    eachSystem = lib.genAttrs (import systems);
   in {
     packages = eachSystem (system: let
       pkgs = import nixpkgs { inherit system; };
@@ -30,6 +32,8 @@
           # TODO: pypkgs.jishaku
           pypkgs.mcstatus
         ];
+
+        meta.mainProgram = "minearchy-bot";
       };
 
       minearchy-bot-container = pkgs.dockerTools.buildImage {
@@ -48,7 +52,7 @@
 
         config.Env        = [ "PATH=/bin" ];
         config.WorkingDir = "/minearcy-bot";
-        config.Cmd        = "${minearchy-bot}/bin/minearchy-bot";
+        config.Cmd        = lib.getExe minearchy-bot;
       };
     });
   };
