@@ -6,6 +6,10 @@ requires-python = ">=3.10"
 authors         = [ { name = "RGBCube", email = "git@rgbcu.be" } ]
 urls.repository = "https://github.com/RGBCube/minearchy-bot"
 readme          = "README.md"
-license         = "GPL-3.0-or-later"
+license.text    = "GPL-3.0-or-later"
 
-dependencies = [ "discord-py>=2.5.2", "jishaku>=2.6.0", "mcstatus>=11.1.1" ]
+# TODO: jishaku
+dependencies = [ "discord-py>=2.5.2", "mcstatus>=11.1.1" ]
+
+[project.scripts]
+minearchy-bot = "minearchy_bot.__main__:main"

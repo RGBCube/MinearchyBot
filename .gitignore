@@ -5,9 +5,8 @@
 !minearchy_bot/
 !minearchy_bot/**/
 
-!*.py
-!*.example.json
-!*.sh
-!*.md
-!*.toml
 !*.lock
+!*.md
+!*.nix
+!*.py
+!*.toml
