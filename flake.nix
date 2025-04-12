@@ -51,7 +51,7 @@
         };
 
         config.Env        = [ "PATH=/bin" ];
-        config.WorkingDir = "/minearcy-bot";
+        config.WorkingDir = "/minearchy-bot";
         config.Cmd        = lib.getExe minearchy-bot;
       };
     });
