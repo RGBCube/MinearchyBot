@@ -74,7 +74,8 @@ class MinearchyBot(CommandsBot):
                 lambda file_path: ".".join(file_path.relative_to(cogs.parent.parent).parts)[:-3],
                 cogs.rglob("*.py"),
             ),
-            ("jishaku",),
+            # ("jishaku",),
+            (),
         ):
             try:
                 await self.load_extension(file_name)
